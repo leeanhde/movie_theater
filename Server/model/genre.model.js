@@ -6,5 +6,5 @@ const genreSchema = new Schema({
     description: String
 });
 
-const Genre = mongoose.model('Genre', genreSchema);
+const Genre = mongoose.model('genre', genreSchema);
 module.exports = Genre;
