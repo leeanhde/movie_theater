@@ -15,10 +15,9 @@ const userSchema = new Schema({
     },
     phone: {
         type: Number,
+        max: 10
     },
-    email: {
-        type: String,
-    },
+    email: String,
     address: String,
     roles: [{
         type: Schema.Types.ObjectId,

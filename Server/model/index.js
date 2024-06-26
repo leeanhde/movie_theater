@@ -4,8 +4,9 @@ const Guest = require('./guest.model');
 const History = require('./history.model')
 const Movies = require('./movies.model')
 const Role = require('./role.model');
-const Ticket = require('./ticket.model')
-const User = require('./user.model')
+const Ticket = require('./ticket.model');
+const User = require('./user.model');
+const Food = require('./food.model');
 // Khai bao doi tuong mongoose su dung nhu moi bien global
 mongoose.Promise = global.Promise;
 // Khai bao 1 doi tuong dai dien db
@@ -19,6 +20,7 @@ db.movies = Movies;
 db.role = Role;
 db.ticket = Ticket; 
 db.user = User;
+db.food = Food;
 
 db.connectDB = async () => {
     mongoose.connect(process.env.MONGO_URI, {
