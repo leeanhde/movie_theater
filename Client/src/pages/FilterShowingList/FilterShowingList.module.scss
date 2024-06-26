@@ -1,0 +1,75 @@
+.movieShowingSection {
+    padding: 20px;
+    background: #000;
+    background-size: cover;
+    color: white;
+
+    .movieShowingTitle {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .movieList {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+    }
+
+    .movieCard {
+        width: calc(20% - 20px); // 5 movies per row with 20px gap
+        background: rgba(0, 0, 0, 0.7);
+        padding: 10px;
+        border-radius: 10px;
+        text-align: center;
+
+        .movieImage {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .movieTitle {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .movieShowTimes {
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .movieRating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .starIcon {
+                width: 24px;
+                height: 24px;
+                fill: gold;
+                margin-right: 5px;
+            }
+        }
+    }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+
+        .pageButton {
+            background: none;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+
+            &.active {
+                background: #fff;
+                color: #000;
+            }
+        }
+    }
+}

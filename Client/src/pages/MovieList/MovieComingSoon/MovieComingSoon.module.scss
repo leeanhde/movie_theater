@@ -1,0 +1,104 @@
+.movieShowingSection {
+    background-image: url('https://homepage.momocdn.net/img/momo-upload-api-230912110927-638301137672516955.jpeg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+.movieShowingTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.movieList {
+    display: flex;
+    overflow-x: hidden; // Hide the scrollbar
+    scroll-behavior: smooth;
+    padding: 0 40px;
+    position: relative;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.movieCard {
+    background-color: #111;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 200px;
+    margin: 0 10px;
+    flex: 0 0 auto;
+    position: relative;
+    transition: transform 0.3s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.movieImage {
+    width: 100%;
+    height: auto;
+    border-bottom: 2px solid #333;
+}
+
+.movieTitle {
+    font-size: 18px;
+    margin: 10px 0;
+    height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.movieShowTimes {
+    font-size: 14px;
+    color: #bbb;
+    margin-bottom: 10px;
+}
+
+.movieRating {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #ffa500;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+
+    .starIcon {
+        margin-right: 5px;
+        width: 16px;
+        height: 16px;
+        fill: #ffa500;
+    }
+}
+
+.arrowButton {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+
+    &.left {
+        left: 10px;
+    }
+
+    &.right {
+        right: 10px;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+}

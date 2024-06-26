@@ -1,0 +1,29 @@
+.filterBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 20px;
+
+    .filterSelect,
+    .filterInput {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        outline: none;
+
+        &::placeholder {
+            color: #aaa;
+        }
+    }
+
+    .filterSelect {
+        margin-right: 10px;
+    }
+
+    .filterInput {
+        flex-grow: 1;
+        margin-left: 10px;
+    }
+}

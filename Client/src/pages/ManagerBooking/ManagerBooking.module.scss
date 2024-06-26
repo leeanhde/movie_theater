@@ -1,0 +1,30 @@
+.container {
+    padding: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.th,
+.td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.header {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 5px 10px;
+    cursor: pointer;
+}

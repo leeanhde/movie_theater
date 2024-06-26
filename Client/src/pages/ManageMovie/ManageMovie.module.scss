@@ -1,0 +1,102 @@
+.manage-movie {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .header {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        margin-bottom: 20px;
+        text-align: right;
+
+        .search-input {
+            padding: 8px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .status {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: capitalize;
+
+            &.status-coming-soon {
+                background-color: #ffc107;
+                color: #333;
+            }
+
+            &.status-now-showing {
+                background-color: #28a745;
+                color: #fff;
+            }
+        }
+
+        .edit-button,
+        .delete-button,
+        .add-movie-button {
+            margin-right: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            transition: opacity 0.3s ease;
+
+            &.edit-button {
+                background-color: #007bff;
+                color: #fff;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+
+            &.delete-button {
+                background-color: #dc3545;
+                color: #fff;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+
+            &.add-movie-button {
+                background-color: #28a745;
+                color: #fff;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+
+    .add-movie-button-container {
+        text-align: center;
+        margin-top: 20px;
+    }
+}

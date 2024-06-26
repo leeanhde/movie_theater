@@ -1,0 +1,44 @@
+.landing-page {
+    height: 100vh;
+    width: 100vw; // Set the width to cover the full viewport
+    background-image: url('https://homepage.momocdn.net/img/momo-upload-api-230912110927-638301137672516955.jpeg');
+    background-size: cover; // Cover the entire element
+    background-position: center; // Center the image
+    background-repeat: no-repeat; // Do not repeat the image
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+h1 {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+.btn {
+    background-color: #ff6600;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.btn:hover {
+    background-color: #cc5200;
+}

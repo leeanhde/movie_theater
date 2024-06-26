@@ -1,0 +1,63 @@
+.manage-seat {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .header {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        margin-bottom: 20px;
+        text-align: right;
+
+        .search-input {
+            padding: 8px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .status-reserved {
+            color: #dc3545; /* Red for reserved seats */
+        }
+
+        .status-maintenance {
+            color: #ffc107; /* Yellow for maintenance seats */
+        }
+
+        .button {
+            margin-right: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+}

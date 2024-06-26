@@ -1,0 +1,182 @@
+// Home.module.scss
+.container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.header {
+    background-color: #fff; /* Màu nền trắng */
+    padding: 20px;
+    border-radius: 10px; /* Bo góc */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    text-align: center; /* Căn giữa chữ */
+    max-width: 600px; /* Đặt chiều rộng tối đa */
+    margin: 0 auto; /* Căn giữa khối */
+}
+
+.title {
+    font-size: 24px; /* Kích thước chữ lớn hơn */
+    font-weight: bold; /* In đậm */
+    color: #333; /* Màu chữ xám đậm */
+    margin-bottom: 10px; /* Khoảng cách dưới tiêu đề */
+    display: flex; /* Sử dụng flexbox để căn ngang */
+    justify-content: space-between; /* Khoảng cách giữa các phần tử */
+    align-items: flex-start; /* Căn trên cùng */
+}
+
+.content {
+    display: flex; /* Sử dụng flexbox để căn ngang */
+    justify-content: space-between; /* Khoảng cách giữa các phần tử */
+    align-items: flex-start; /* Căn trên cùng */
+}
+
+.features {
+    list-style-type: none; /* Bỏ dấu đầu dòng */
+    padding: 0; /* Bỏ padding */
+    margin: 0; /* Bỏ margin */
+    text-align: left; /* Căn trái cho danh sách */
+}
+
+.features li {
+    font-size: 16px; /* Kích thước chữ vừa phải */
+    color: #666; /* Màu chữ xám nhạt */
+    margin-bottom: 10px; /* Khoảng cách dưới mỗi mục */
+    position: relative; /* Để tạo khoảng trống cho icon */
+    padding-left: 20px; /* Khoảng cách bên trái để đặt icon */
+}
+
+.features li::before {
+    content: '✔'; /* Icon check */
+    color: #4caf50; /* Màu xanh lá cây */
+    position: absolute; /* Đặt icon bên trái */
+    left: 0; /* Căn trái */
+    top: 0; /* Căn trên */
+}
+
+.bookingButton {
+    background-color: #fe2c55; /* Màu nền xanh lá */
+    color: white; /* Màu chữ trắng */
+    padding: 10px 20px; /* Padding cho nút */
+    border: none; /* Bỏ viền */
+    border-radius: 5px; /* Bo góc */
+    cursor: pointer; /* Con trỏ chuột dạng pointer */
+    font-size: 16px; /* Kích thước chữ */
+    height: fit-content; /* Đặt chiều cao vừa với nội dung */
+    align-self: center; /* Căn nút lên đầu */
+}
+
+.bookingButton:hover {
+    background-color: #45a049; /* Màu nền khi hover */
+}
+
+.movieShowingSection {
+    margin-top: 2rem;
+}
+
+.movieShowingTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.movieList {
+    display: flex;
+    justify-content: space-between;
+}
+
+.movieCard {
+    text-align: center;
+}
+
+.movieImage {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+}
+
+.movieTitle {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+.movieShowTimes {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+// Home.module.scss (thêm phần sau)
+.movieReviewSection {
+    margin-top: 2rem;
+}
+
+.movieReviewTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.movieReviewList {
+    display: flex;
+    justify-content: space-between;
+}
+
+.movieReviewCard {
+    text-align: center;
+}
+
+.movieReviewImage {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+}
+
+.movieReviewRating {
+    margin-top: 0.5rem;
+    color: #ffc107;
+}
+
+.seeMoreButton {
+    background-color: #fe2c55;
+    color: #fff;
+    border: none; /* Bỏ viền */
+    border-radius: 5px; /* Bo góc */
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.moviesComingSoonSection {
+    margin-top: 2rem;
+}
+
+.moviesComingSoonTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.moviesComingSoonList {
+    display: flex;
+    justify-content: space-between;
+}
+
+.movieComingSoonCard {
+    text-align: center;
+}
+
+.movieComingSoonImage {
+    width: 150px;
+    height: 225px;
+    object-fit: cover;
+}
+
+.movieComingSoonRating {
+    margin-top: 0.5rem;
+    color: #ffc107;
+}

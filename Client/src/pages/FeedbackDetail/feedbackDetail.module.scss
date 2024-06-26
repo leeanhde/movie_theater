@@ -1,0 +1,138 @@
+// FeedbackDetail.module.scss
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.movieInfo {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 40px;
+}
+
+.poster {
+    width: 200px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+}
+
+.ratingContainer {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.rating {
+    font-size: 36px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.maxRating {
+    font-size: 18px;
+    color: #888;
+}
+
+.genre,
+.releaseDate {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.bookButton {
+    padding: 10px 20px;
+    background-color: #ff6b01;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.reviewsSection {
+    margin-top: 40px;
+}
+
+.reviewsTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.commentList {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.comment {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    width: calc(50% - 10px); // Chiều rộng của mỗi comment là 50% trừ đi khoảng cách
+    box-sizing: border-box; // Đảm bảo rằng padding và border không làm tăng kích thước của comment
+
+    &.selected {
+        background-color: #f5f5f5;
+    }
+}
+
+.reviewHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.reviewerInfo {
+    display: flex;
+    align-items: center;
+}
+
+.reviewer {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.reviewerSource {
+    font-size: 14px;
+    color: #888;
+}
+
+.reviewRating {
+    font-size: 14px;
+    color: #888;
+}
+
+.reviewContent {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.selectedComment {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 20px;
+}
+
+.reviewImage {
+    max-width: 100%;
+    height: auto;
+}
