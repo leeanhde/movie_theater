@@ -18,7 +18,6 @@ app.get("/", (req, res) => {
 });
 
 //tiếp nhận các request từ server
-app.use("/api/v1", require("./routes/index"));
 
 // kiem soat url ko xac dinh
 app.use(async (req, res, next) => {
