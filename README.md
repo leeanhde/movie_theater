@@ -11,6 +11,7 @@ The management system allows for easy performance of the functions of movie thea
     - [Backend Setup](#backend-setup)
     - [Frontend Setup](#frontend-setup)
   - [Technologies Used](#technologies-used)
+  - [Acknowledgements](#acknowledgements)
 
 ## Installation
 
@@ -89,3 +90,13 @@ Ensure you have the following installed:
 - React
 - Redux
 - Others
+
+## Acknowledgements
+
+Thank and mention the people or resources that helped you in the project:
+
+- Do Quang Minh (leader)
+- Le Trung Anh
+- Dang Manh Cuong
+- Nguyen Tien Dat
+- Nguyen Hoang Quang Minh
