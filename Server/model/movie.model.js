@@ -12,7 +12,7 @@ const movieSchema = new mongoose.Schema({
     largeImage: String,
     smallImage: String,
     movieProductionCompany: String,
-    promotionId: { type: mongoose.Schema.Types.ObjectId, ref: 'Promotion' },
+    promotionId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Promotion' }],
     types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Type' }],
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
