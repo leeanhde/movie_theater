@@ -25,30 +25,24 @@ async function createMovie(req, res, next) {
     }
 }
 
-async function edit(req, res, next) {
+async function editMovie(req, res, next) {
     try {
         const MovieId = req.params.id;
         const updatedData = {
-            $set: {
-                movieNameEnglish: req.body.movieNameEnglish,
-                movieNameVn: req.body.movieNameVn,
-                director: req.body.director,
-                actor: req.body.actor,
-                duration: req.body.duration,
-                fromDate: req.body.fromDate,
-                toDate: req.body.toDate,
-                content: req.body.content,
-                largeImage: req.body.largeImage,
-                smallImage: req.body.smallImage,
-                movieProductionCompany: req.body.movieProductionCompany,
-            },
-            $addToSet: {
-                promotionId: req.body.promotionId,
-                types: req.body.types,
-            },
-            $set: {
-                deleted: req.body.deleted,
-            },
+            movieNameEnglish: req.body.movieNameEnglish,
+            movieNameVn: req.body.movieNameVn,
+            director: req.body.director,
+            actor: req.body.actor,
+            duration: req.body.duration,
+            fromDate: req.body.fromDate,
+            toDate: req.body.toDate,
+            content: req.body.content,
+            largeImage: req.body.largeImage,
+            smallImage: req.body.smallImage,
+            movieProductionCompany: req.body.movieProductionCompany,
+            promotionId: req.body.promotionId,
+            types: req.body.types,
+            deleted: req.body.deleted
         };
         const updatedMovie = await Movie.findByIdAndUpdate(MovieId, updatedData, { new: true });
         res.status(200).json(updatedMovie);
@@ -57,7 +51,7 @@ async function edit(req, res, next) {
     }
 }
 
-async function list(req, res, next) {
+async function listMovies(req, res, next) {
     try {
         const listMovies = await Movie.find().populate("promotionId types");
         const newListMovies = listMovies.map(m => ({
@@ -83,6 +77,19 @@ async function list(req, res, next) {
     }
 }
 
+async function getMovieById(req, res, next) {
+    try {
+        const MovieId = req.params.id;
+        const movie = await Movie.findById(MovieId).populate("promotionId types");
+        if (!movie) {
+            return res.status(404).json({ message: "Movie not found" });
+        }
+        res.status(200).json(movie);
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function deleteMovie(req, res, next) {
     try {
         const MovieId = req.params.id;
@@ -95,8 +102,9 @@ async function deleteMovie(req, res, next) {
 
 const MovieController = {
     createMovie,
-    edit,
-    list,
+    editMovie,
+    listMovies,
+    getMovieById,
     deleteMovie
 }
 
