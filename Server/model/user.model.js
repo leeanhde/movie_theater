@@ -10,18 +10,14 @@ const bookingSchema = new mongoose.Schema({
         price: Number
     }],
     totalAmount: { type: Number, required: true },
-    paymentMethod: { type: String, required: true },
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-}, { _id: true });
+    paymentMethod: { type: String, required: true }
+}, { timestamps: true, _id: true });
 
 const feedbackSchema = new mongoose.Schema({
     movieId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
     rating: { type: Number, required: true },
     comment: String,
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-}, { _id: true });
+}, {  timestamps: true,_id: true });
 
 const userSchema = new mongoose.Schema({
     username: { type: String, unique: true, required: true },
