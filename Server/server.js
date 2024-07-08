@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const httpErrors = require("http-errors");
 const bodyParser = require("body-parser");
 const db = require("./model/index");
-const {} = require("./routes/index");
+const { movieRouter, TypeRouter } = require("./routes/index");
 
 const app = express();
 
@@ -17,7 +17,9 @@ app.get("/", (req, res) => {
   });
 });
 
-//tiếp nhận các request từ server
+//tiep nhan cac request tu Client
+app.use('/', movieRouter);
+app.use('/', TypeRouter)
 
 // kiem soat url ko xac dinh
 app.use(async (req, res, next) => {
