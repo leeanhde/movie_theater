@@ -4,7 +4,7 @@ const morgan = require("morgan");
 const httpErrors = require("http-errors");
 const bodyParser = require("body-parser");
 const db = require("./model/index");
-const { movieRouter, TypeRouter, PromotionRouter } = require("./routes/index");
+const { movieRouter, TypeRouter, PromotionRouter,CinemaRouter } = require("./routes/index");
 
 const app = express();
 
@@ -19,10 +19,9 @@ app.get("/", (req, res) => {
 
 
 //tiep nhan cac request tu Client
-app.use('/', movieRouter);
+app.use('/', movieRouter,CinemaRouter);
 app.use('/', TypeRouter);
 app.use('/', PromotionRouter)
-
 // kiem soat url ko xac dinh
 app.use(async (req, res, next) => {
     next(httpErrors.NotFound());
