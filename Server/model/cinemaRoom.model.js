@@ -4,9 +4,8 @@ const mongoose = require('mongoose');
 const seatSchema = new mongoose.Schema({
     seatRow: { type: Number, required: true },
     seatColumn: { type: String, required: true },
-    seatStatus: { type: Number, required: true },
-    seatType: { type: Number, required: true },
-    deleted: { type: Boolean, default: false }
+    seatStatus: { type: Number, required: true },// cac trang thai da dat, chua dat, bao tri
+    seatType: { type: Number, required: true }, // tuy theo number de set ghe vip, thuong, cap doi
 }, { _id: true });
 
 const cinemaRoomSchema = new mongoose.Schema({
