@@ -5,6 +5,13 @@ const Type = require('./type.model');
 const User = require('./user.model');
 const Promotion = require('./promotion.model');
 const CinemaRoom = require('./cinemaRoom.model');
+const Booking = require('./booking.model');
+const Feedback = require('./feedback.model');
+const Revenue = require('./revenue.model');
+const Seat = require('./seat.model');
+
+
+
 // Khai bao doi tuong mongoose su dung nhu moi bien global
 mongoose.Promise = global.Promise;
 // Khai bao 1 doi tuong dai dien db
