@@ -13,11 +13,12 @@ const db = {Movie, Schedule, Type, User, Promotion, CinemaRoom};
 db.mongoose = mongoose;
 
 db.connectDB = async () => {
-    mongoose.connect(process.env.MONGO_URI, {
-        dbName: process.env.DB_NAME
+  mongoose
+    .connect(process.env.MONGO_URI, {
+      dbName: process.env.DB_NAME,
     })
-    .then(()=> console.log("Connect to mongodb success"))
-    .catch(error => console.error(error.message))
-}
+    .then(() => console.log("Connect to mongodb success"))
+    .catch((error) => console.error(error.message));
+};
 
 module.exports = db;
