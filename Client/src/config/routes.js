@@ -14,6 +14,7 @@ const routes = {
     yourticket: '/yourticket',
     movielist: '/movielist',
     bookingseat: '/showtime/bookingseat',
+    bookingfood: '/showtime/bookingfood',
     payment: '/showtime/bookingseat/payment',
     moviedetail: '/moviedetail',
     feedbackdetail: '/feedbackdetail',
@@ -35,7 +36,8 @@ const routes = {
     ticketcodemanagement: '/ticketcodemanagement',
     managestaffschedule: '/managestaffschedule',
     managestaffinfomation: '/managestaffinfomation',
-    feedbackreport: '/feedbackreport',
+    feedbackreport: '/feedbackreport'
+
 };
 
 export default routes;
