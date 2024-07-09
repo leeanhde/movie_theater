@@ -8,7 +8,7 @@ const CinemaRoom = require('./cinemaRoom.model');
 const Booking = require('./booking.model');
 const Feedback = require('./feedback.model');
 const Revenue = require('./revenue.model');
-const Seat = require('./seat.model');
+// const Seat = require('./seat.model');
 
 
 

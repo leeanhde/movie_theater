@@ -2,29 +2,6 @@ const db = require('../model/index');
 const CinemaRoom = db.CinemaRoom;
 
 
-//create new cinema room
-// const create = async (req, res, next) => {
-//     try {
-//         const seats = req.body.seats.map(seat => ({
-//             seatRow: seat.seatRow,
-//             seatColumn: seat.seatColumn,
-//             seatStatus: seat.seatStatus,
-//             seatType: seat.seatType
-//         }));
-        
-//         const newCinemaRoom = new cinemaRoom({
-//             cinemaRoomName: req.body.cinemaRoomName,
-//             seatQuantity: req.body.seatQuantity,
-//             seats: seats,
-//         });
-        
-//         const saved = await newCinemaRoom.save();
-//         res.status(201).json(saved);
-//     } catch (error) {
-//         next(error);
-//     }
-// };
-
 const create = async (req, res, next) => {
     try {
         const { cinemaRoomName, seatConfig } = req.body;
