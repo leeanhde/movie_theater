@@ -1,5 +1,6 @@
 const db = require('../model/index');
 const CinemaRoom = db.CinemaRoom;
+const Seat = db.Seat;
 
 
 const create = async (req, res, next) => {
