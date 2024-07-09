@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const revenueSchema = new mongoose.Schema({
+const revenueSchema = new Schema({
   date: {
     type: Date,
     required: true
@@ -14,7 +15,9 @@ const revenueSchema = new mongoose.Schema({
     required: true
   }
 }, {
-  timestamps: true // This option adds createdAt and updatedAt fields automatically
+  timestamps: true 
 });
 
-module.exports = mongoose.model('Revenue', revenueSchema);
+const Revenue = mongoose.model('revenue', revenueSchema);
+
+module.exports = Revenue;

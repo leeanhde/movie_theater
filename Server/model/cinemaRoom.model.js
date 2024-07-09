@@ -1,18 +1,13 @@
-//CinemaRoom Schema
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const seatSchema = new mongoose.Schema({
-    seatRow: { type: Number, required: true },
-    seatColumn: { type: String, required: true },
-    seatStatus: { type: Number, required: true },// cac trang thai da dat, chua dat, bao tri
-    seatType: { type: Number, required: true }, // tuy theo number de set ghe vip, thuong, cap doi
-}, { _id: true });
-
-const cinemaRoomSchema = new mongoose.Schema({
+const cinemaRoomSchema = new Schema({
     cinemaRoomName: { type: String, required: true },
     seatQuantity: { type: Number, required: true },
-    seats: [seatSchema],
+    seats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'seat' }],
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
 
-module.exports = mongoose.model('CinemaRoom', cinemaRoomSchema);
+const CinemaRoom = mongoose.model('cinemaRoom', cinemaRoomSchema);
+
+module.exports = CinemaRoom;

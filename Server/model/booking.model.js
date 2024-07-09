@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const bookingSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    scheduleId: { type: mongoose.Schema.Types.ObjectId, ref: 'Schedule', required: true },
+const bookingSchema = new Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
+    scheduleId: { type: mongoose.Schema.Types.ObjectId, ref: 'schedule', required: true },
     seats: [{ type: String, required: true }],
     snacks: [{
         name: String,
@@ -13,4 +14,6 @@ const bookingSchema = new mongoose.Schema({
     paymentMethod: { type: String, required: true }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Booking', bookingSchema);
+const Booking = mongoose.model('booking', bookingSchema);
+
+module.exports = Booking;
