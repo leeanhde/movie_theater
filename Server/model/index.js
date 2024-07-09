@@ -9,15 +9,28 @@ const Booking = require('./booking.model');
 const Feedback = require('./feedback.model');
 const Revenue = require('./revenue.model');
 const Seat = require('./seat.model');
+const Role = require('./role.model');
+
 
 
 
 // Khai bao doi tuong mongoose su dung nhu moi bien global
 mongoose.Promise = global.Promise;
 // Khai bao 1 doi tuong dai dien db
-const db = {Movie, Schedule, Type, User, Promotion, CinemaRoom};
+const db = {};
 // Bo sung cac thuoc tinh cho db
 db.mongoose = mongoose;
+db.movie = Movie;
+db.schedule = Schedule;
+db.type = Type;
+db.user = User;
+db.promotion = Promotion;
+db.cinemaroom = CinemaRoom;
+db.booking = Booking;
+db.feedback = Feedback;
+db.revenue = Revenue;
+db.seat = Seat;
+db.role = Role;
 
 db.connectDB = async () => {
   mongoose

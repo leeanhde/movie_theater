@@ -1,6 +1,7 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const promotionSchema = new mongoose.Schema({
+const promotionSchema = new Schema({
     title: { type: String, required: true },
     detail: String,
     discountLevel: { type: Number, required: true },
@@ -10,4 +11,6 @@ const promotionSchema = new mongoose.Schema({
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Promotion', promotionSchema);
+const Promotion = mongoose.model('promotion', promotionSchema);
+
+module.exports = Promotion;

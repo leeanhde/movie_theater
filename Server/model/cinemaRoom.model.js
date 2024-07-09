@@ -1,10 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const cinemaRoomSchema = new mongoose.Schema({
+const cinemaRoomSchema = new Schema({
     cinemaRoomName: { type: String, required: true },
     seatQuantity: { type: Number, required: true },
-    seats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Seat' }],
+    seats: [{ type: mongoose.Schema.Types.ObjectId, ref: 'seat' }],
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
 
-module.exports = mongoose.model('CinemaRoom', cinemaRoomSchema);
+const CinemaRoom = mongoose.model('cinemaRoom', cinemaRoomSchema);
+
+module.exports = CinemaRoom;
