@@ -7,7 +7,7 @@ movieRouter.use(bodyParser.json());
 
 movieRouter.post('/create', MovieController.createMovie);
 movieRouter.get('/movielist', MovieController.listMovies);
-movieRouter.get('/movie/:id', MovieController.getMovieById);
+movieRouter.get('/:id', MovieController.getMovieById);
 movieRouter.put('/update/:id', MovieController.editMovie);
 movieRouter.delete('/delete/:id', MovieController.deleteMovie);
 
