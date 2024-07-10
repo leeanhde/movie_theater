@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
-const User = require('../model/user.model'); // Assuming user model is in models directory
-const Schedule = require('../model/schedule.model'); // Assuming schedule model is in models directory
+const User = require('../model/user.model'); 
+const Schedule = require('../model/schedule.model'); 
+const db = require('../model/index');
+const Booking = db.booking;
 
 async function bookTicket(req, res, next) {
     try {
