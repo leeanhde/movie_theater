@@ -1,7 +1,11 @@
 const express = require('express');
-const router = express.Router();
-const bookingController = require('../controller/booking.controller'); // Assuming booking controller is in controllers directory
+const bodyParser = require('body-parser');
+const BookingController = require('../controller/booking.controller'); 
+const bookingRouter = express.Router();
+bookingRouter.use(bodyParser.json());
 
-router.post('/book-ticket', bookingController.bookTicket);
+bookingRouter.post('/bookticket', BookingController.bookTicket);
+bookingRouter.get('/history/:id', BookingController.getBookingHistory);
 
-module.exports = router;
+
+module.exports = bookingRouter;

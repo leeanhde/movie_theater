@@ -1,4 +1,5 @@
-const { User } = require("../model/index");
+const db = require('../model');
+const { user: User} = db;
 
 const getCustomerById = async (req, res, next) => {
   try {
@@ -18,7 +19,7 @@ const getCustomerById = async (req, res, next) => {
 // View user profile
 const viewProfile = async (req, res, next) => {
   try {
-    const userId = req.user.id; // Assuming the user's ID is available in the request
+    const userId = req.params.id; 
     const user = await User.findById(userId);
 
     if (!user) {
@@ -34,10 +35,8 @@ const viewProfile = async (req, res, next) => {
 // Edit user profile
 const editProfile = async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(
-      req.user.id, 
-      {
-        $set: {
+      const userId = req.params.id;
+      const updatedData = {
           email: req.body.email,
           username: req.body.username,
           fullName: req.body.fullName,
@@ -46,21 +45,17 @@ const editProfile = async (req, res, next) => {
           phoneNumber: req.body.phoneNumber,
           address: req.body.address,
           image: req.body.image
-        }
-      },
-      { new: true, runValidators: true }
-    );
+      };
+      const updatedUser = await User.findByIdAndUpdate(userId, updatedData, { new: true});
+      if (!updatedUser) {
+          return res.status(404).json({ message: "User not found" });
+      }
 
-    const updatedUser = await User.findById(req.user.id);
-
-    if (!updatedUser) {
-      return res.status(404).json({ message: "User not found", data: null });
-    }
-
-    res.status(200).json({ user: updatedUser });
+      res.status(200).json(updatedUser);
   } catch (error) {
-    next(error);
+      next(error);
   }
 };
+
 
 module.exports = { getCustomerById, viewProfile, editProfile };
