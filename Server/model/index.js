@@ -9,13 +9,14 @@ const Booking = require('./booking.model');
 const Feedback = require('./feedback.model');
 const Revenue = require('./revenue.model');
 const Seat = require('./seat.model');
+const Food = require('./food.model');
 
 
 
 // Khai bao doi tuong mongoose su dung nhu moi bien global
 mongoose.Promise = global.Promise;
 // Khai bao 1 doi tuong dai dien db
-const db = {Movie, Schedule, Type, User, Promotion, CinemaRoom};
+const db = {Movie, Schedule, Type, User, Promotion, CinemaRoom, Food};
 // Bo sung cac thuoc tinh cho db
 db.mongoose = mongoose;
 

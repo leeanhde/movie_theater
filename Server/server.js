@@ -5,6 +5,7 @@ const httpErrors = require("http-errors");
 const bodyParser = require("body-parser");
 const db = require("./model/index");
 const { movieRouter, TypeRouter, PromotionRouter,CinemaRouter } = require("./routes/index");
+const {FoodRouter} = require("./routes");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.get("/", (req, res) => {
 app.use('/', movieRouter,CinemaRouter);
 app.use('/', TypeRouter);
 app.use('/', PromotionRouter)
+app.use('/food', FoodRouter)
 // kiem soat url ko xac dinh
 app.use(async (req, res, next) => {
   next(httpErrors.NotFound());
