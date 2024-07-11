@@ -13,15 +13,15 @@ authRouter.post('/signup',[VerifySignUp.checkExistUser, VerifySignUp.checkExistR
 authRouter.post('/signin', authController.login);
 
 // Logout route
-authRouter.post('/logout', logout);
+authRouter.post('/logout', authController.logout);
 
 // Refresh token route
-authRouter.post('/refresh-token', refreshToken);
+authRouter.post('/refresh-token', authController.refreshToken);
 
 // Forgot password route
-authRouter.post('/forgot-password', forgotPassword);
+authRouter.post('/forgot-password', authController.forgotPassword);
 
 // Reset password route
-authRouter.post('/reset-password', resetPassword);
+authRouter.post('/reset-password', authController.resetPassword);
 
 module.exports = authRouter;

@@ -69,7 +69,10 @@ async function login(req, res, next){
             expiresIn: config.jwtExpiration
         });
         // console.log(token);
-        
+        let refreshToken = jwt.sign({ id: existUser._id }, config.secret, {
+            algorithm: "HS256",
+            expiresIn: config.jwtRefreshExpiration
+        });
         let authorities = [existUser.roles];
 
         // Send object to Client
@@ -77,7 +80,8 @@ async function login(req, res, next){
             id: existUser._id,
             email: existUser.email,
             roles: authorities,
-            accessToken: token
+            accessToken: token,
+            refreshToken: refreshToken
         });
     } catch (error) {
         next(error);
