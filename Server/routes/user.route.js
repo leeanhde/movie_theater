@@ -1,13 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
+const userController = require('../controller/user.controller');
 
-const UserRouter = express.Router();
-UserRouter.use(bodyParser.json());
+const userRouter = express.Router();
+userRouter.use(bodyParser.json());
 
-UserRouter.get('/getAll', UserController.listTypes);
-UserRouter.post('/createType', TypeController.createType);
-UserRouter.get('/listtype', TypeController.listTypes);
-// TypeRouter.put('/updatetype', TypeController.editType);
-// TypeRouter.delete('/deletetype', TypeController.deleteType);
+// Định nghĩa các route và liên kết với các phương thức trong controller
+userRouter.get('/profile/:id', userController.viewProfile);
+userRouter.put('/profile/update/:id', userController.editProfile);
 
-module.exports = TypeRouter;
+module.exports = userRouter;
