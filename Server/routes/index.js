@@ -5,6 +5,7 @@ const TypeRouter = require('./type.route');
 const PromotionRouter = require('./promotion.route');
 const CinemaRouter = require('./cinemaRoom.route')
 const AuthRouter = require("./auth.route");
+const FeedbackRouter = require('./feedback.route');
 
 
 router.use('/movies', movieRouter);
@@ -12,5 +13,6 @@ router.use('/types', TypeRouter);
 router.use('/promotions', PromotionRouter);
 router.use('/auth', AuthRouter);
 router.use('/cinemas', CinemaRouter);
+router.use('/feedbacks', FeedbackRouter);
 
 module.exports = router;

@@ -1,10 +1,10 @@
-const { User, Movie } = require("../model/index");
+const { User, Movie, Feedback } = require("../model/index");
 
 const createFeedback = async (req, res, next) => {
   try {
     const { movieId } = req.params;
     const { rating, comment } = req.body;
-    const userId = req.user.id;
+    const userId = req.user._id;
 
     if (!comment || !rating || !movieId) {
       return res.status(400).json({ message: "Data is required", data: null });
@@ -18,6 +18,11 @@ const createFeedback = async (req, res, next) => {
     const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found", data: null });
+    }
+
+    const existingFeedback = user.feedbacks.find(feedback => feedback.movieId.toString() === movieId);
+    if (existingFeedback) {
+      return res.status(400).json({ message: "You have already provided feedback for this movie", data: null });
     }
 
     const feedback = { movieId, rating, comment };
@@ -62,16 +67,10 @@ const getUserFeedbacks = async (req, res, next) => {
 
 const updateFeedback = async (req, res, next) => {
   try {
-    const { userId, feedbackId } = req.params;
+    const { feedbackId } = req.params;
     const { rating, comment } = req.body;
 
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found", data: null });
-    }
-
-    const feedback = user.feedbacks.id(feedbackId);
+    const feedback = await Feedback.findById(feedbackId);
     if (!feedback) {
       return res.status(404).json({ message: "Feedback not found", data: null });
     }
@@ -79,7 +78,7 @@ const updateFeedback = async (req, res, next) => {
     feedback.rating = rating ?? feedback.rating;
     feedback.comment = comment ?? feedback.comment;
 
-    await user.save();
+    await feedback.save();
 
     res.status(200).json({ message: "Feedback updated successfully", data: feedback });
   } catch (error) {
@@ -89,26 +88,20 @@ const updateFeedback = async (req, res, next) => {
 
 const deleteFeedback = async (req, res, next) => {
   try {
-    const { userId, feedbackId } = req.params;
+    const { feedbackId } = req.params;
 
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).json({ message: "User not found", data: null });
-    }
-
-    const feedback = user.feedbacks.id(feedbackId);
+    const feedback = await Feedback.findById(feedbackId);
     if (!feedback) {
       return res.status(404).json({ message: "Feedback not found", data: null });
     }
 
-    feedback.remove();
-    await user.save();
+    await feedback.remove();
 
     res.status(200).json({ message: "Feedback deleted successfully" });
   } catch (error) {
     next(error);
   }
 };
+
 
 module.exports = { createFeedback , getAllFeedbacks, getUserFeedbacks, updateFeedback, deleteFeedback };
