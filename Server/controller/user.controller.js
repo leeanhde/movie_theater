@@ -71,7 +71,6 @@ const updateUserBookings = async (req, res, next) => {
     const { bookingId } = req.params;
     const updatedData = req.body;
 
-    // Tìm và cập nhật booking với bookingId
     const updatedBooking = await Booking.findByIdAndUpdate(
       bookingId,
       updatedData,
@@ -94,10 +93,8 @@ const updateUserBookings = async (req, res, next) => {
   }
 };
 const getUserAllBookings = async (req, res, next) => {
-  console.log("🚀 ~ getUserAllBookings ~ req:", req)
   try {
     const bookings = await Booking.find({}).populate("scheduleId");
-    console.log("🚀 ~ getUserAllBookings ~ bookings:", bookings);
 
     if (bookings.length === 0) {
       return res
@@ -174,6 +171,7 @@ const editProfile = async (req, res, next) => {
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,
       image: req.body.image,
+      deleted: req.body.deleted,
     };
     const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {
       new: true,

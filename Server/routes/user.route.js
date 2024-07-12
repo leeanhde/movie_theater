@@ -15,10 +15,11 @@ userRouter.put('/by-booking/booking/:bookingId',userController.updateUserBooking
 
 userRouter.get('/by-role/:roleName',userController.getUserByRole);
 
-userRouter.put('/new',userController.addNewUser);
+userRouter.post('/new',userController.addNewUser);
 
 // Định nghĩa các route và liên kết với các phương thức trong controller
 userRouter.get('/profile/:id', userController.viewProfile);
+
 userRouter.put('/profile/update/:id', userController.editProfile);
 
 module.exports = userRouter;
