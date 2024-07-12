@@ -15,6 +15,7 @@ FeedbackRouter.use(bodyParser.json());
 // FeedbackRouter.put("/:feedbackId", JWT.verifyToken, JWT.isAdmin, FeedbackController.updateFeedback);
 
 // FeedbackRouter.delete("/:feedbackId", JWT.verifyToken, JWT.isAdmin, FeedbackController.deleteFeedback);
+
 FeedbackRouter.post("/create",  FeedbackController.createFeedback);
 
 FeedbackRouter.get("/getAll", FeedbackController.getAllFeedbacks);
@@ -24,4 +25,5 @@ FeedbackRouter.get("/get/user/:userId", FeedbackController.getUserFeedbacks);
 FeedbackRouter.put("/:feedbackId",  FeedbackController.updateFeedback);
 
 FeedbackRouter.delete("/:feedbackId",  FeedbackController.deleteFeedback);
+
 module.exports = FeedbackRouter;

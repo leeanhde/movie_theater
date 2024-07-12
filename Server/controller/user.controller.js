@@ -116,6 +116,35 @@ const getUserAllBookings = async (req, res, next) => {
     next(error);
   }
 };
+const addNewUser = async (req, res, next) => {
+  const { username,  email ,role,status} = req.body;
+
+  //default password : 12345678
+  try {
+    const newUser = new User({
+      username,
+      email,
+      password  : "$2b$10$WFU/GFebYKHler9LE2bDHO3CCbhRqs40RA7/P/XD5pIrH9ejSgvQa",
+      role,
+      status
+    });
+
+    const savedUser = await newUser.save();
+
+    res.status(201).json({ message: "User created successfully", data: savedUser });
+  } catch (error) {
+    if (error.code === 11000) {
+      const duplicateField = Object.keys(error.keyPattern)[0];
+      return res.status(409).json({ message: `Duplicate ${duplicateField} error`, error: error.message });
+    }
+
+    // Handle other errors
+    console.error("Error in addNewUser:", error);
+    res.status(500).json({ message: "An error occurred", error: error.message });
+    next(error);
+  }
+};
+
 // View user profile
 const viewProfile = async (req, res, next) => {
   try {
@@ -167,4 +196,5 @@ module.exports = {
   getUserBookings,
   getUserAllBookings,
   updateUserBookings,
+  addNewUser
 };
