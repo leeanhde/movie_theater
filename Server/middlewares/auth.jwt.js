@@ -21,7 +21,7 @@ async function verifyToken(req, res, next) {
         throw createHttpError.Unauthorized(message);
       }
       req.userId = decode.id;
-      const user = await User.findByPk(decode.id, {
+      const user = await User.findById(decode.id, {
         include: [{ model: Role, as: "roles" }],
       });
       req.user = user;

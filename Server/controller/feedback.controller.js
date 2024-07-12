@@ -6,6 +6,7 @@ const createFeedback = async (req, res, next) => {
   try {
     const { rating, comment, movieId } = req.body;
     const userId = req.user._id;
+    console.log("🚀 ~ createFeedback ~ userId:", userId)
 
     if (!comment || !rating || !movieId) {
       return res.status(400).json({ message: "Data is required", data: null });
