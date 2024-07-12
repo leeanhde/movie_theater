@@ -1,6 +1,6 @@
 const db = require("../model/index");
-const Movie = require('../model/movie.model');
-
+// const Movie = require('../model/movie.model');
+const Movie = db.movie;
 
 async function createMovie(req, res, next) {
     try {
@@ -109,29 +109,55 @@ async function nowShowingMovies(req, res, next) {
             toDate: { $gte: currentDate }
         }).populate("promotionId types");
         
-        const nowShowingList = movies.map(m => ({
-            _id: m._id,
-            movieNameEnglish: m.movieNameEnglish,
-            movieNameVn: m.movieNameVn,
-            director: m.director,
-            actor: m.actor,
-            duration: m.duration,
-            fromDate: new Date(m.fromDate).toDateString('en-GB'),
-            toDate: new Date(m.toDate).toDateString('en-GB'),
-            content: m.content,
-            largeImage: m.largeImage,
-            smallImage: m.smallImage,
-            movieProductionCompany: m.movieProductionCompany,
-            promotionId: m.promotionId?.map(p => p.title),
-            types: m.types?.map(t => t.typeName),
-            deleted: m.deleted
-        }));
+        // const nowShowingList = movies.map(m => ({
+        //     _id: m._id,
+        //     movieNameEnglish: m.movieNameEnglish,
+        //     movieNameVn: m.movieNameVn,
+        //     director: m.director,
+        //     actor: m.actor,
+        //     duration: m.duration,
+        //     fromDate: new Date(m.fromDate).toDateString('en-GB'),
+        //     toDate: new Date(m.toDate).toDateString('en-GB'),
+        //     content: m.content,
+        //     largeImage: m.largeImage,
+        //     smallImage: m.smallImage,
+        //     movieProductionCompany: m.movieProductionCompany,
+        //     promotionId: m.promotionId?.map(p => p.title),
+        //     types: m.types?.map(t => t.typeName),
+        //     deleted: m.deleted
+        // }));
+
+        const nowShowingList = movies.map(m => {
+            const fromDate = new Date(m.fromDate);
+            const toDate = new Date(m.toDate);
+            const isNowShowing = fromDate <= currentDate && toDate >= currentDate;
+
+            if (isNowShowing) {
+                return {
+                    _id: m._id,
+                    movieNameEnglish: m.movieNameEnglish,
+                    movieNameVn: m.movieNameVn,
+                    director: m.director,
+                    actor: m.actor,
+                    duration: m.duration,
+                    fromDate: fromDate.toDateString('en-GB'),
+                    toDate: toDate.toDateString('en-GB'),
+                    content: m.content,
+                    largeImage: m.largeImage,
+                    smallImage: m.smallImage,
+                    movieProductionCompany: m.movieProductionCompany,
+                    promotionId: m.promotionId?.map(p => p.title),
+                    types: m.types?.map(t => t.typeName),
+                    deleted: m.deleted
+                };
+            }
+        }).filter(m => m !== undefined); // Filter out undefined values
 
         res.status(200).json(nowShowingList);
     } catch (error) {
         next(error);
     }
-}
+};
 
 async function comingSoonMovies(req, res, next) {
     try {
