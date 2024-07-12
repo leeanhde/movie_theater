@@ -216,8 +216,10 @@ async function deleteUserById(req, res, next) {
   }
 }
 
+
 const UserController = {
-  getCustomerById, viewProfile, editProfile, list, deleteUserById
+  // getCustomerById, 
+  viewProfile, editProfile, list, deleteUserById
 };
 module.exports = UserController;
 module.exports = {

@@ -10,7 +10,6 @@ const Feedback = require('./feedback.model');
 const Revenue = require('./revenue.model');
 const Seat = require('./seat.model');
 const Role = require('./role.model');
-
 // Khai bao doi tuong mongoose su dung nhu moi bien global
 mongoose.Promise = global.Promise;
 // Khai bao 1 doi tuong dai dien db
@@ -28,7 +27,6 @@ db.feedback = Feedback;
 db.revenue = Revenue;
 db.seat = Seat;
 db.role = Role;
-
 db.connectDB = async () => {
   mongoose
     .connect(process.env.MONGO_URI, {
