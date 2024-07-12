@@ -11,9 +11,6 @@ const Revenue = require('./revenue.model');
 const Seat = require('./seat.model');
 const Role = require('./role.model');
 
-
-
-
 // Khai bao doi tuong mongoose su dung nhu moi bien global
 mongoose.Promise = global.Promise;
 // Khai bao 1 doi tuong dai dien db

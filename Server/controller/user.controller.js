@@ -117,14 +117,14 @@ const getUserAllBookings = async (req, res, next) => {
   }
 };
 const addNewUser = async (req, res, next) => {
-  const { username,  email ,role,status} = req.body;
+  const { username, email, role, status } = req.body;
 
   //default password : 12345678
   try {
     const newUser = new User({
       username,
       email,
-      password  : "$2b$10$WFU/GFebYKHler9LE2bDHO3CCbhRqs40RA7/P/XD5pIrH9ejSgvQa",
+      password: "$2b$10$WFU/GFebYKHler9LE2bDHO3CCbhRqs40RA7/P/XD5pIrH9ejSgvQa",
       role,
       status
     });
@@ -145,10 +145,11 @@ const addNewUser = async (req, res, next) => {
   }
 };
 
+
 // View user profile
 const viewProfile = async (req, res, next) => {
   try {
-    const userId = req.params.id;
+    const userId = req.user.id; // Assuming the user's ID is available in the request
     const user = await User.findById(userId);
 
     if (!user) {
@@ -188,6 +189,37 @@ const editProfile = async (req, res, next) => {
   }
 };
 
+async function list(req, res, next) {
+  try {
+    const list = await User.find();
+    const newList = list.map(r => ({
+      _id: r._id,
+      username: r.username,
+      email: r.email,
+      fullName: r.fullName,
+      phoneNumber: r.phoneNumber,
+      address: r.address
+    }));
+    res.status(200).json(newList);
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function deleteUserById(req, res, next) {
+  try {
+    const userId = req.params.id;
+    await User.findByIdAndDelete(userId);
+    res.status(204).json({ message: " deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+}
+
+const UserController = {
+  getCustomerById, viewProfile, editProfile, list, deleteUserById
+};
+module.exports = UserController;
 module.exports = {
   getUserById,
   getUserByRole,

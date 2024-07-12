@@ -1,4 +1,5 @@
 const db = require("../model/index");
+// const Movie = require('../model/movie.model');
 const Movie = db.movie;
 
 async function createMovie(req, res, next) {
@@ -100,13 +101,31 @@ async function deleteMovie(req, res, next) {
     }
 }
 
-const nowShowingMovies = async (req, res, next) => {
+async function nowShowingMovies(req, res, next) {
     try {
         const currentDate = new Date();
         const movies = await Movie.find({
             fromDate: { $lte: currentDate },
             toDate: { $gte: currentDate }
         }).populate("promotionId types");
+        
+        // const nowShowingList = movies.map(m => ({
+        //     _id: m._id,
+        //     movieNameEnglish: m.movieNameEnglish,
+        //     movieNameVn: m.movieNameVn,
+        //     director: m.director,
+        //     actor: m.actor,
+        //     duration: m.duration,
+        //     fromDate: new Date(m.fromDate).toDateString('en-GB'),
+        //     toDate: new Date(m.toDate).toDateString('en-GB'),
+        //     content: m.content,
+        //     largeImage: m.largeImage,
+        //     smallImage: m.smallImage,
+        //     movieProductionCompany: m.movieProductionCompany,
+        //     promotionId: m.promotionId?.map(p => p.title),
+        //     types: m.types?.map(t => t.typeName),
+        //     deleted: m.deleted
+        // }));
 
         const nowShowingList = movies.map(m => {
             const fromDate = new Date(m.fromDate);
@@ -206,6 +225,24 @@ async function getMovieDetail(req, res, next) {
     }
 }
 
+async function getMovieByName(req, res, next) {
+    try {
+        const movieName = req.params.movieName; 
+        const movie = await Movie.findOne({ name: movieName });
+        if (!movie) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
+        res.status(200).json(movie);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {
+    getMovieByName
+};
+
+
 const MovieController = {
     createMovie,
     editMovie,
@@ -214,7 +251,8 @@ const MovieController = {
     deleteMovie,
     nowShowingMovies,
     comingSoonMovies,
-    getMovieDetail
+    getMovieDetail,
+    getMovieByName
 }
 
 module.exports = MovieController;
