@@ -1,0 +1,110 @@
+.manage-user {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+
+    .header {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .search-bar {
+        margin-bottom: 20px;
+        text-align: right;
+
+        .search-input {
+            padding: 8px;
+            width: 300px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .status-active {
+            color: #28a745; /* Green for active status */
+        }
+
+        .status-inactive {
+            color: #dc3545; /* Red for inactive status */
+        }
+
+        .button {
+            margin-right: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+            transition: opacity 0.3s ease;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .add-user-form {
+        margin-top: 20px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+
+        .form-header {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .form {
+            display: flex;
+            flex-direction: column;
+
+            .form-label {
+                margin-bottom: 10px;
+
+                input,
+                select {
+                    padding: 8px;
+                    width: 100%;
+                    font-size: 16px;
+                    border: 1px solid #ccc;
+                    border-radius: 4px;
+                }
+            }
+
+            .form-submit {
+                margin-top: 10px;
+                padding: 10px 20px;
+                align-self: flex-start;
+                cursor: pointer;
+                border: none;
+                border-radius: 4px;
+                background-color: #007bff;
+                color: #fff;
+                font-size: 16px;
+                transition: opacity 0.3s ease;
+
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}

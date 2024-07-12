@@ -23,6 +23,7 @@ const routes = {
     manageshowtime: '/manageshowtime',
     manageseat: '/manageseat',
     manageuser: '/manageuser',
+    managestaff: '/managestaff',
     managerevenue: '/managerevenue',
 
     //Staff route
