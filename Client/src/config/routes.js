@@ -1,6 +1,6 @@
 const routes = {
     //Guest
-    landingpage: 'landingpage',
+    landingpage: '/landingpage',
     login: '/login',
     register: '/register',
 

@@ -3,6 +3,7 @@ const db = require('../model');
 const jwt = require("jsonwebtoken");
 const createHttpError = require("http-errors");
 const config = require("../config/auth.config");
+const nodemailer = require('nodemailer');
 
 const {role: Role, user: User} = db;
 
