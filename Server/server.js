@@ -5,10 +5,11 @@ const httpErrors = require("http-errors");
 const bodyParser = require("body-parser");
 const db = require("./model/index");
 const routes = require('./routes');
-
 const app = express();
+const cors = require('cors');
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use(morgan("dev"));
 //router toi web root
 app.get("/", (req, res) => {

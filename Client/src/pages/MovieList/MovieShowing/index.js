@@ -2,19 +2,28 @@ import React, { useRef, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import styles from './MovieShowing.module.scss';
+import axios from 'axios';
 
-const MovieShowingList = ({ movies }) => {
+const MovieShowingList = () => {
     const cx = classNames.bind(styles);
     const movieListRef = useRef(null);
     const [cardWidth, setCardWidth] = useState(0);
     const navigate = useNavigate();
+
+    const [moviesList, setMoviesList] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:9999/api/movies/movielist')
+            .then(res => setMoviesList(res.data))
+            .then(data => console.log(data))
+            .catch(err => console.log('Error fetching movie:', err));
+    }, []);
 
     useEffect(() => {
         if (movieListRef.current && movieListRef.current.firstChild) {
             const cardWidth = movieListRef.current.firstChild.getBoundingClientRect().width;
             setCardWidth(cardWidth + 20); // Card width + margin
         }
-    }, []);
+    }, [moviesList]);
 
     const scrollLeft = () => {
         if (movieListRef.current) {
@@ -39,8 +48,8 @@ const MovieShowingList = ({ movies }) => {
                 &#10094;
             </button>
             <div className={cx('movieList')} ref={movieListRef}>
-                {movies.map((movie) => (
-                    <div key={movie.id} className={cx('movieCard')} onClick={() => handleMovieClick(movie)}>
+                {moviesList.map((movie) => (
+                    <div key={movie._id} className={cx('movieCard')} onClick={() => handleMovieClick(movie)}>
                         <img src={movie.imageUrl} alt={movie.title} className={cx('movieImage')} />
                         <h3 className={cx('movieTitle')}>{movie.title}</h3>
                         <p className={cx('movieShowTimes')}>{movie.genre}</p>
