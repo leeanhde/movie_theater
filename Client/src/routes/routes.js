@@ -13,6 +13,7 @@ import ShowTime from '~/pages/ShowTime';
 import YourTicket from '~/pages/YourTicket';
 import MovieList from '~/pages/MovieList';
 import BookingSeat from '~/pages/BookingSeat';
+import BookingFood from "~/pages/BookingFood";
 import Payment from '~/pages/Payment';
 import MovieDetail from '~/pages/MovieDetail/index';
 import FeedbackDetail from '~/pages/FeedbackDetail';
@@ -62,6 +63,7 @@ const privateRoutes = [
     { path: config.routes.upload, component: Upload, layout: HeaderOnly },
     { path: config.routes.search, component: Search, layout: null },
     { path: config.routes.bookingseat, component: BookingSeat, layout: HeaderOnly },
+    { path: config.routes.bookingfood, component: BookingFood, layout: HeaderOnly },
 ];
 
 const privateRoutesStaff = [

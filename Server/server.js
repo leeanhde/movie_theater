@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require('cors');
 const morgan = require("morgan");
 const httpErrors = require("http-errors");
 const bodyParser = require("body-parser");
@@ -8,6 +9,7 @@ const routes = require('./routes');
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 //router toi web root
@@ -19,7 +21,6 @@ app.get("/", (req, res) => {
 
 //tiep nhan cac request tu Client
 app.use('/api', routes);
-
 // kiem soat url ko xac dinh
 app.use(async (req, res, next) => {
   next(httpErrors.NotFound());

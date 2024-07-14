@@ -1,0 +1,85 @@
+.booking-food {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .content {
+        width: 100%;
+        max-width: 800px;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+        .movie-info {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            text-align: center;
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .selected-foods, .total-price {
+            margin-bottom: 20px;
+
+            .label {
+                font-size: 1.2em;
+                margin-bottom: 10px;
+                font-weight: bold;
+            }
+
+            .food-list, .price {
+                font-size: 1.2em;
+            }
+
+            .food {
+                display: flex;
+                justify-content: space-between;
+                padding: 10px;
+                border-bottom: 1px solid #eee;
+
+                .close {
+                    cursor: pointer;
+                    color: #dc3545;
+                }
+            }
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #218838;
+            }
+
+            &:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+            }
+        }
+    }
+
+    p {
+        font-size: 1.2em;
+        color: #666;
+    }
+}
