@@ -1,14 +1,17 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require('cors');
 const morgan = require("morgan");
 const httpErrors = require("http-errors");
 const bodyParser = require("body-parser");
 const db = require("./model/index");
 const { movieRouter, TypeRouter, PromotionRouter,CinemaRouter } = require("./routes/index");
 const {FoodRouter} = require("./routes");
+const VnpayRouter = require("./routes/vnpay.route");
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 //router toi web root
@@ -22,7 +25,8 @@ app.get("/", (req, res) => {
 app.use('/', movieRouter,CinemaRouter);
 app.use('/', TypeRouter);
 app.use('/', PromotionRouter)
-app.use('/food', FoodRouter)
+app.use('/api/food', FoodRouter);
+app.use('/', VnpayRouter);
 // kiem soat url ko xac dinh
 app.use(async (req, res, next) => {
   next(httpErrors.NotFound());

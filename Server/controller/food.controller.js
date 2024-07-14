@@ -19,7 +19,7 @@ async function createFood(req, res, next) {
 
 async function listFoods(req, res, next) {
     try {
-        const listFoods = await Food.find().populate("promotionId types");
+        const listFoods = await Food.find();
         if (!listFoods) {
             throw new Error('No foods found');
         }
