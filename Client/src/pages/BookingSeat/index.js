@@ -16,7 +16,7 @@ function BookingSeat() {
         const totalPrice = calculateTotalPrice(selectedSeats);
         // Ở đây, bạn có thể xử lý logic để chuyển đến trang thanh toán
         // với thông tin về các ghế đã chọn và thông tin phim
-        navigate('/showtime/bookingseat/payment', {
+        navigate('/showtime/bookingfood', {
             state: {
                 selectedSeats,
                 movieTitle,

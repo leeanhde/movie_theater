@@ -5,7 +5,7 @@ const seatSchema = new Schema({
     cinemaRoomId: { type: mongoose.Schema.Types.ObjectId, ref: 'cinemaRoom', required: true },
     seatRow: { type: Number, required: true },
     seatColumn: { type: String, required: true },
-    seatStatus: { type: Number, required: true }, // các trạng thái đã đặt, chưa đặt, bảo trì
+    seatStatus: { type: Number, required: true },
     seatType: { type: Number, required: true } // tùy theo number để set ghế vip, thường, cặp đôi
 }, { timestamps: true });
 
