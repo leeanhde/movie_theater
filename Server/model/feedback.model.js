@@ -1,10 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const feedbackSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    movieId: { type: mongoose.Schema.Types.ObjectId, ref: 'Movie', required: true },
+const feedbackSchema = new Schema({
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true },
+    movieId: { type: mongoose.Schema.Types.ObjectId, ref: 'movie', required: true },
     rating: { type: Number, required: true },
     comment: String,
 }, { timestamps: true });
 
-module.exports = mongoose.model('Feedback', feedbackSchema);
+const Feedback = mongoose.model('feedback', feedbackSchema);
+
+module.exports = Feedback;

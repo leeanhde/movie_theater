@@ -1,5 +1,6 @@
 const db = require("../model/index");
-const Movie = db.Movie;
+// const Movie = require('../model/movie.model');
+const Movie = db.movie;
 
 async function createMovie(req, res, next) {
     try {
@@ -100,12 +101,158 @@ async function deleteMovie(req, res, next) {
     }
 }
 
+async function nowShowingMovies(req, res, next) {
+    try {
+        const currentDate = new Date();
+        const movies = await Movie.find({
+            fromDate: { $lte: currentDate },
+            toDate: { $gte: currentDate }
+        }).populate("promotionId types");
+        
+        // const nowShowingList = movies.map(m => ({
+        //     _id: m._id,
+        //     movieNameEnglish: m.movieNameEnglish,
+        //     movieNameVn: m.movieNameVn,
+        //     director: m.director,
+        //     actor: m.actor,
+        //     duration: m.duration,
+        //     fromDate: new Date(m.fromDate).toDateString('en-GB'),
+        //     toDate: new Date(m.toDate).toDateString('en-GB'),
+        //     content: m.content,
+        //     largeImage: m.largeImage,
+        //     smallImage: m.smallImage,
+        //     movieProductionCompany: m.movieProductionCompany,
+        //     promotionId: m.promotionId?.map(p => p.title),
+        //     types: m.types?.map(t => t.typeName),
+        //     deleted: m.deleted
+        // }));
+
+        const nowShowingList = movies.map(m => {
+            const fromDate = new Date(m.fromDate);
+            const toDate = new Date(m.toDate);
+            const isNowShowing = fromDate <= currentDate && toDate >= currentDate;
+
+            if (isNowShowing) {
+                return {
+                    _id: m._id,
+                    movieNameEnglish: m.movieNameEnglish,
+                    movieNameVn: m.movieNameVn,
+                    director: m.director,
+                    actor: m.actor,
+                    duration: m.duration,
+                    fromDate: fromDate.toDateString('en-GB'),
+                    toDate: toDate.toDateString('en-GB'),
+                    content: m.content,
+                    largeImage: m.largeImage,
+                    smallImage: m.smallImage,
+                    movieProductionCompany: m.movieProductionCompany,
+                    promotionId: m.promotionId?.map(p => p.title),
+                    types: m.types?.map(t => t.typeName),
+                    deleted: m.deleted
+                };
+            }
+        }).filter(m => m !== undefined); // Filter out undefined values
+
+        res.status(200).json(nowShowingList);
+    } catch (error) {
+        next(error);
+    }
+};
+
+async function comingSoonMovies(req, res, next) {
+    try {
+        const currentDate = new Date();
+        const movies = await Movie.find({
+            fromDate: { $gt: currentDate }
+        }).populate("promotionId types");
+        
+        const comingSoonList = movies.map(m => ({
+            _id: m._id,
+            movieNameEnglish: m.movieNameEnglish,
+            movieNameVn: m.movieNameVn,
+            director: m.director,
+            actor: m.actor,
+            duration: m.duration,
+            fromDate: new Date(m.fromDate).toDateString('en-GB'),
+            toDate: new Date(m.toDate).toDateString('en-GB'),
+            content: m.content,
+            largeImage: m.largeImage,
+            smallImage: m.smallImage,
+            movieProductionCompany: m.movieProductionCompany,
+            promotionId: m.promotionId?.map(p => p.title),
+            types: m.types?.map(t => t.typeName),
+            deleted: m.deleted
+        }));
+
+        res.status(200).json(comingSoonList);
+    } catch (error) {
+        next(error);
+    }
+}
+
+async function getMovieDetail(req, res, next) {
+    try {
+        const movieId = req.params.id; 
+        const movie = await Movie.findById(movieId).populate("promotionId types"); 
+        
+        if (!movie) {
+            return res.status(404).json({ message: "Movie not found" }); 
+        }
+
+        const movieDetail = {
+            _id: movie._id,
+            movieNameEnglish: movie.movieNameEnglish,
+            movieNameVn: movie.movieNameVn,
+            director: movie.director,
+            actor: movie.actor,
+            duration: movie.duration,
+            fromDate: new Date(movie.fromDate).toDateString('en-GB'),
+            toDate: new Date(movie.toDate).toDateString('en-GB'),
+            content: movie.content,
+            largeImage: movie.largeImage,
+            smallImage: movie.smallImage,
+            movieProductionCompany: movie.movieProductionCompany,
+            promotionId: movie.promotionId?.map(p => p.title),
+            types: movie.types?.map(t => t.typeName),
+            deleted: movie.deleted,
+            createdAt: movie.createdAt,
+            updatedAt: movie.updatedAt
+        };
+
+        res.status(200).json(movieDetail); 
+    } catch (error) {
+        next(error); 
+    }
+}
+
+async function getMovieByName(req, res, next) {
+    try {
+        const movieName = req.params.movieName; 
+        const movie = await Movie.findOne({ name: movieName });
+        if (!movie) {
+            return res.status(404).json({ message: 'Movie not found' });
+        }
+        res.status(200).json(movie);
+    } catch (error) {
+        next(error);
+    }
+}
+
+module.exports = {
+    getMovieByName
+};
+
+
 const MovieController = {
     createMovie,
     editMovie,
     listMovies,
     getMovieById,
-    deleteMovie
+    deleteMovie,
+    nowShowingMovies,
+    comingSoonMovies,
+    getMovieDetail,
+    getMovieByName
 }
 
 module.exports = MovieController;

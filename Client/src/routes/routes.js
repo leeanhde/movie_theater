@@ -41,6 +41,7 @@ import ManageShowtime from '~/pages/ManageShowtime';
 import ManageSeat from '~/pages/ManageSeat';
 import ManageUser from '~/pages/ManageUser';
 import ManageRevenue from '~/pages/ManageRevenua';
+import ManageStaff from '~/pages/ManageStaff';
 
 // Public routes
 const publicRoutes = [
@@ -84,6 +85,7 @@ const privateRoutesAdmin = [
     { path: config.routes.manageshowtime, component: ManageShowtime },
     { path: config.routes.manageseat, component: ManageSeat },
     { path: config.routes.manageuser, component: ManageUser },
+    { path: config.routes.managestaff, component: ManageStaff },
     { path: config.routes.managerevenue, component: ManageRevenue },
 ];
 

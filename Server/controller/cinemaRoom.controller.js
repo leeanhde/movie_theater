@@ -1,59 +1,55 @@
 const db = require('../model/index');
-const CinemaRoom = db.CinemaRoom;
+const CinemaRoom = require('../model/cinemaRoom.model');
+const Seat = require('../model/seat.model');
 
-
-//create new cinema room
-// const create = async (req, res, next) => {
-//     try {
-//         const seats = req.body.seats.map(seat => ({
-//             seatRow: seat.seatRow,
-//             seatColumn: seat.seatColumn,
-//             seatStatus: seat.seatStatus,
-//             seatType: seat.seatType
-//         }));
-        
-//         const newCinemaRoom = new cinemaRoom({
-//             cinemaRoomName: req.body.cinemaRoomName,
-//             seatQuantity: req.body.seatQuantity,
-//             seats: seats,
-//         });
-        
-//         const saved = await newCinemaRoom.save();
-//         res.status(201).json(saved);
-//     } catch (error) {
-//         next(error);
-//     }
-// };
 
 const create = async (req, res, next) => {
     try {
         const { cinemaRoomName, seatConfig } = req.body;
         const seats = [];
 
-        // seatConfig should be an object with keys as seat rows and values as seat quantities
+        // Create seats
         for (const [seatColumn, seatQuantity] of Object.entries(seatConfig)) {
             for (let seatRow = 1; seatRow <= seatQuantity; seatRow++) {
-                seats.push({
+                const newSeat = new Seat({
+                    cinemaRoomId: null,
                     seatRow: seatRow,
                     seatColumn: seatColumn,
-                    seatStatus: 0, // default status
-                    seatType: 1,   // default type
+                    seatStatus: 0, 
+                    seatType: 1,   
                 });
+                seats.push(newSeat); 
             }
         }
 
+        // Create cinema room
         const newCinemaRoom = new CinemaRoom({
             cinemaRoomName: cinemaRoomName,
             seatQuantity: seats.length,
-            seats: seats,
+            seats: [], // This will be populated with seat IDs after saving
         });
 
-        const saved = await newCinemaRoom.save();
-        res.status(201).json(saved);
+        // Save cinema room to get ID
+        const savedCinemaRoom = await newCinemaRoom.save();
+
+        // Assign cinemaRoomId to each seat and save them
+        const seatIds = [];
+        for (let seat of seats) {
+            seat.cinemaRoomId = savedCinemaRoom._id;
+            const savedSeat = await seat.save();
+            seatIds.push(savedSeat._id);
+        }
+
+        // Update cinema room with seat IDs
+        savedCinemaRoom.seats = seatIds;
+        await savedCinemaRoom.save();
+
+        res.status(201).json(savedCinemaRoom);
     } catch (error) {
         next(error);
     }
 };
+
 
 // update Cinema Room 
 async function update(req, res, next) {
@@ -69,11 +65,11 @@ async function update(req, res, next) {
     }
 }
 //update seat status dung de dat ghe
-async function updateSeatStatus (req, res, next) {
+async function updateSeatStatus(req, res, next) {
     try {
-        const cinemaRoomId = req.params.cinemaRoomId; // ID of the cinema room
-        const seatIds = req.body.seatIds; // Array of seat IDs to update
-        const newSeatStatus = req.body.seatStatus; // New status for the seats
+        const cinemaRoomId = req.params.cinemaRoomId;
+        const seatIds = req.body.seatIds;
+        const newSeatStatus = req.body.seatStatus;
 
         // Find the cinema room by ID
         const cinemaRoom = await CinemaRoom.findById(cinemaRoomId);
@@ -99,15 +95,15 @@ async function updateSeatStatus (req, res, next) {
     }
 };
 
-async function listSeatInRoomById(req, res, next){
+async function listSeatInRoomById(req, res, next) {
     try {
         const cinemaRoomId = req.params.cinemaRoomId;
-        const cinemaRoom = await CinemaRoom.findById(cinemaRoomId);
+        const cinemaRoom = await CinemaRoom.findById(cinemaRoomId).populate('seats');
         if (!cinemaRoom) {
             return res.status(404).json({ message: 'Cinema room not found' });
         }
 
-        // Extract seats from the cinemaRoom object
+        // Extract seats from the populated cinemaRoom object
         const seats = cinemaRoom.seats.map(seat => ({
             _id: seat._id,
             seatRow: seat.seatRow,
@@ -121,7 +117,8 @@ async function listSeatInRoomById(req, res, next){
     } catch (error) {
         next(error);
     }
-};
+}
+
 
 
 
@@ -130,9 +127,9 @@ async function list(req, res, next) {
     try {
         const list = await CinemaRoom.find();
         const newList = list.map(r => ({
-           _id: r._id,
-           cinemaRoomName: r.cinemaRoomName,
-           seatQuantity: r.seatQuantity
+            _id: r._id,
+            cinemaRoomName: r.cinemaRoomName,
+            seatQuantity: r.seatQuantity
         }));
         res.status(200).json(newList);
     } catch (error) {
