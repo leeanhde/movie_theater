@@ -95,7 +95,7 @@ async function deleteMovie(req, res, next) {
     try {
         const MovieId = req.params.id;
         await Movie.findByIdAndDelete(MovieId);
-        res.status(204).json({ message: "Movie deleted successfully" });
+        res.status(200).json({ message: "Movie deleted successfully" , MovieId});
     } catch (error) {
         next(error);
     }

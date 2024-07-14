@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+// db.js or index.js
+const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const typeSchema = new Schema({
@@ -6,6 +7,6 @@ const typeSchema = new Schema({
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
 
-const Type = mongoose.model('type', typeSchema);
+const Type = mongoose.model('type', typeSchema); 
 
 module.exports = Type;

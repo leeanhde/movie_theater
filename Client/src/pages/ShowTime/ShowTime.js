@@ -10,65 +10,22 @@ function ShowTime() {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
 
-    // // Dummy data for showtimes
-    // const showtimes = [
-    //     {
-    //         day: 'Monday',
-    //         movies: [
-    //             {
-    //                 title: 'Ngoi Ben Nui Lua',
-    //                 genre: 'Action',
-    //                 formats: ['2D', '3D'],
-    //                 times: ['10:00 AM', '1:00 PM', '4:00 PM', '7:00 PM'],
-    //                 imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg', // Example image URL
-    //                 showDate: '2024-06-17', // Example date
-    //             },
-    //             {
-    //                 title: 'Ngoi Ben Nui Lua',
-    //                 genre: 'Comedy',
-    //                 formats: ['2D'],
-    //                 times: ['11:00 AM', '2:00 PM', '5:00 PM', '8:00 PM'],
-    //                 imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg', // Example image URL
-    //                 showDate: '2024-06-17', // Example date
-    //             },
-    //         ],
-    //     },
-    //     {
-    //         day: 'Tuesday',
-    //         movies: [
-    //             {
-    //                 title: 'Ngoi Ben Nui Lua',
-    //                 genre: 'Sci-Fi',
-    //                 formats: ['3D'],
-    //                 times: ['9:00 AM', '12:00 PM', '3:00 PM', '6:00 PM'],
-    //                 imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg', // Example image URL
-    //                 showDate: '2024-06-18', // Example date
-    //             },
-    //             {
-    //                 title: 'Ngoi Ben Nui Lua',
-    //                 genre: 'Horror',
-    //                 formats: ['2D', '4D'],
-    //                 times: ['10:30 AM', '1:30 PM', '4:30 PM', '7:30 PM'],
-    //                 imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg', // Example image URL
-    //                 showDate: '2024-06-18', // Example date
-    //             },
-    //         ],
-    //     },
-    //     // Add more days and movies as needed
-    // ];
     const [showtimes, setShowtimes] = useState([]);
     const [movies, setMovies] = useState([]);
-    const getList =  async () =>{
-       const req= await axios.get('http://localhost:9999/api/schedule/list');
-       console.log(req.data);
-       setShowtimes(req?.data)
+    const getList = async () => {
+        const req = await axios.get('http://localhost:9999/api/schedule/list');
+        console.log('listschedule');
+        console.log(req.data);
+        setShowtimes(req?.data)
     }
     const getMovies = async () => {
         const req = await axios.get('http://localhost:9999/api/movies/movielist');
         //check neu co data:
-        if(req.data){
-            setMovies(req.data)
-        }else{
+        if (req.data) {
+            console.log('list movie');
+            setMovies(req.data);
+            console.log(req.data);
+        } else {
             alert("....")
         }
     }

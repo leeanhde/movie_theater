@@ -1,5 +1,5 @@
 const db = require("../model/index");
-const Food = db.Food;
+const Food = require('../model/food.model');
 
 async function createFood(req, res, next) {
     try {

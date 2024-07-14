@@ -8,4 +8,6 @@ const foodSchema = new mongoose.Schema({
     foodImage: {type: String, required: true},
 }, { timestamps: true });
 
-module.exports = mongoose.model('Food', foodSchema);
+const Food = mongoose.model('Food', foodSchema);
+
+module.exports = Food;

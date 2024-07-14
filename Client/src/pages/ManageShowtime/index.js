@@ -1,38 +1,76 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ManageShowtime.module.scss';
-
+import { useNavigate } from 'react-router-dom';
+import * as scheduleService from '~/services/scheduleService';
 const cx = classNames.bind(styles);
 
-const initialShowtimes = [
-    { id: 1, movieName: 'Movie A', theater: 'Theater 1', showTime: '10:00 AM', showDate: '2024-06-15' },
-    { id: 2, movieName: 'Movie B', theater: 'Theater 2', showTime: '13:00 PM', showDate: '2024-06-15' },
-    // Add more initial showtime data here
-];
-
 function ManageShowtime() {
-    const [showtimes, setShowtimes] = useState(initialShowtimes);
-    const [filteredShowtimes, setFilteredShowtimes] = useState(initialShowtimes);
     const [searchTerm, setSearchTerm] = useState('');
+    const [schedule, setSchedule] = useState([]);
+    const [filteredShowtimes, setFilteredShowtimes] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchMoviesNowShowing = async () => {
+            try {
+                setIsLoading(true);
+                const schedule = await scheduleService.listSchedule();
+                console.log('Fetched schedule:', schedule);
+                setSchedule(schedule);
+                setFilteredShowtimes(schedule); // Set initial filtered data to all schedule items
+                setError(null);
+            } catch (error) {
+                console.error('Error fetching schedule:', error);
+                setError('Failed to load schedule. Please try again later.');
+                setSchedule([]);
+                setFilteredShowtimes([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchMoviesNowShowing();
+    }, []);
 
     const handleSearch = (event) => {
         const term = event.target.value.toLowerCase();
         setSearchTerm(term);
-        const filtered = showtimes.filter(
-            (showtime) =>
-                showtime.movieName.toLowerCase().includes(term) ||
-                showtime.theater.toLowerCase().includes(term) ||
-                showtime.showTime.toLowerCase().includes(term) ||
-                showtime.showDate.toLowerCase().includes(term),
-        );
+        const filtered = schedule.filter((showtime) => {
+            const {
+                movieId: { movieNameEnglish },
+                cinemaRoomId: { cinemaRoomName },
+                scheduleTime,
+                fromDate,
+                toDate,
+            } = showtime;
+
+            return (
+                movieNameEnglish.toLowerCase().includes(term) ||
+                cinemaRoomName.toLowerCase().includes(term) ||
+                scheduleTime.some((time) => new Date(time).toLocaleString().toLowerCase().includes(term)) ||
+                new Date(fromDate).toLocaleDateString().toLowerCase().includes(term) ||
+                new Date(toDate).toLocaleDateString().toLowerCase().includes(term)
+            );
+        });
         setFilteredShowtimes(filtered);
     };
 
     const handleDelete = (id) => {
-        const updatedShowtimes = showtimes.filter((showtime) => showtime.id !== id);
-        setShowtimes(updatedShowtimes);
+        const updatedShowtimes = schedule.filter((showtime) => showtime._id !== id);
+        setSchedule(updatedShowtimes);
         setFilteredShowtimes(updatedShowtimes);
     };
+
+    if (isLoading) {
+        return <div className={cx('loading')}>Loading movies...</div>;
+    }
+
+    if (error) {
+        return <div className={cx('error')}>{error}</div>;
+    }
 
     return (
         <div className={cx('manage-showtime')}>
@@ -50,7 +88,7 @@ function ManageShowtime() {
                 <thead>
                     <tr>
                         <th className={cx('th')}>Movie Name</th>
-                        <th className={cx('th')}>Theater</th>
+                        <th className={cx('th')}>Room</th>
                         <th className={cx('th')}>Show Time</th>
                         <th className={cx('th')}>Show Date</th>
                         <th className={cx('th')}>Actions</th>
@@ -58,21 +96,28 @@ function ManageShowtime() {
                 </thead>
                 <tbody>
                     {filteredShowtimes.map((showtime) => (
-                        <tr key={showtime.id}>
-                            <td className={cx('td')}>{showtime.movieName}</td>
-                            <td className={cx('td')}>{showtime.theater}</td>
-                            <td className={cx('td')}>{showtime.showTime}</td>
-                            <td className={cx('td')}>{showtime.showDate}</td>
+                        <tr key={showtime._id}>
+                            <td className={cx('td')}>{showtime.movieId.movieNameEnglish}</td>
+                            <td className={cx('td')}>{showtime.cinemaRoomId.cinemaRoomName}</td>
+                            <td className={cx('td')}>
+                                {showtime.scheduleTime.map((time, index) => (
+                                    <span key={index}>{new Date(time).toLocaleString()}</span>
+                                ))}
+                            </td>
+                            <td className={cx('td')}>
+                                {new Date(showtime.fromDate).toLocaleString()} - {' '}
+                                {new Date(showtime.toDate).toLocaleString()}
+                            </td>
                             <td className={cx('td')}>
                                 <button
                                     className={cx('button', 'edit-button')}
-                                    onClick={() => console.log(`Edit showtime ${showtime.id}`)}
+                                    onClick={() => console.log(`Edit showtime ${showtime._id}`)}
                                 >
                                     Edit
                                 </button>
                                 <button
                                     className={cx('button', 'delete-button')}
-                                    onClick={() => handleDelete(showtime.id)}
+                                    onClick={() => handleDelete(showtime._id)}
                                 >
                                     Delete
                                 </button>
@@ -82,7 +127,10 @@ function ManageShowtime() {
                 </tbody>
             </table>
             <div className={cx('add-showtime-button-container')}>
-                <button className={cx('button', 'add-showtime-button')} onClick={() => console.log('Add new showtime')}>
+                <button
+                    className={cx('button', 'add-showtime-button')}
+                    onClick={() => console.log('Add new showtime')}
+                >
                     Add Showtime
                 </button>
             </div>

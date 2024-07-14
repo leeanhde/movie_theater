@@ -9,6 +9,7 @@ const FeedbackRouter = require('./feedback.route');
 const UserRouter = require("./user.route");
 const BookingRouter = require("./booking.route");
 const ScheduleRouter = require('./schedule.route')
+const foodRouter = require('./food.route')
 
 router.use('/movies', movieRouter);
 router.use('/types', TypeRouter);
@@ -19,5 +20,6 @@ router.use('/feedbacks', FeedbackRouter);
 router.use('/user', UserRouter);
 router.use('/booking', BookingRouter);
 router.use('/schedule', ScheduleRouter)
+router.use('/food', foodRouter);
 
 module.exports = router;

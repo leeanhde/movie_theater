@@ -7,7 +7,6 @@ const bodyParser = require("body-parser");
 const db = require("./model/index");
 const routes = require('./routes');
 const app = express();
-const cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json());

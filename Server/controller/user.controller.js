@@ -217,11 +217,7 @@ async function deleteUserById(req, res, next) {
 
 const UserController = {
   // getCustomerById, 
-  viewProfile, editProfile, list, deleteUserById
-};
-module.exports = UserController;
-module.exports = {
-  getUserById,
+  viewProfile, editProfile, list, deleteUserById, getUserById,
   getUserByRole,
   viewProfile,
   editProfile,
@@ -230,3 +226,4 @@ module.exports = {
   updateUserBookings,
   addNewUser
 };
+module.exports = UserController;

@@ -15,10 +15,10 @@ const create = async (req, res, next) => {
                     cinemaRoomId: null,
                     seatRow: seatRow,
                     seatColumn: seatColumn,
-                    seatStatus: 0, 
-                    seatType: 1,   
+                    seatStatus: 0,
+                    seatType: 1,
                 });
-                seats.push(newSeat); 
+                seats.push(newSeat);
             }
         }
 
@@ -52,18 +52,23 @@ const create = async (req, res, next) => {
 
 
 // update Cinema Room 
-async function update(req, res, next) {
+const update = async (req, res, next) => {
     try {
         const cinemaRoomId = req.params.id;
         const updatedData = {
-
+            cinemaRoomName: req.body.cinemaRoomName,
         };
-        const updated = await CinemaRoom.findByIdAndUpdate(cinemaRoomId, updatedData, { new: true });
-        res.status(200).json(updated);
+
+        const updatedCinemaRoom = await CinemaRoom.findByIdAndUpdate(cinemaRoomId, updatedData, { new: true });
+        if (!updatedCinemaRoom) {
+            return res.status(404).json({ message: 'Cinema room not found' });
+        }
+
+        res.status(200).json(updatedCinemaRoom);
     } catch (error) {
         next(error);
     }
-}
+};
 //update seat status dung de dat ghe
 async function updateSeatStatus(req, res, next) {
     try {
@@ -141,7 +146,7 @@ async function deleteCinemaRoom(req, res, next) {
     try {
         const cinemaRoomId = req.params.id;
         await CinemaRoom.findByIdAndDelete(cinemaRoomId);
-        res.status(204).json({ message: " deleted successfully" });
+        res.status(200).json({ message: " deleted successfully" });
     } catch (error) {
         next(error);
     }

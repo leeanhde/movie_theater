@@ -1,5 +1,5 @@
 const db = require('../model/index');
-const Promotion = db.Promotion;
+const Promotion = require('../model/promotion.model');
 
 async function createPromotion(req, res, next) {
     try {
@@ -54,7 +54,7 @@ async function updatePromotion(req, res, next) {
         if (!promotionId) {
             return res.status(404).json({ message: 'Promotion not found' });
         }
-        res.status(200).json({ message: 'Promotion update successfully' });
+        res.status(200).json({ message: 'Promotion update successfully' , updateData});
     } catch (error) {
         next(error);
     }

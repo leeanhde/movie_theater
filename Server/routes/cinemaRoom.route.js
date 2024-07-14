@@ -12,12 +12,12 @@ router.get('/listCinemaRoom', CinemaRoomController.list);
 router.get('/:cinemaRoomId/listallseats', CinemaRoomController.listSeatInRoomById);
 
 // Update cinema room
-router.put('/:id', CinemaRoomController.update);
+router.put('/update/:id', CinemaRoomController.update);
 
 // Update seat status
 router.put('/:cinemaRoomId/seats/status', CinemaRoomController.updateSeatStatus);
 
 // Delete cinema room
-router.delete('/:id', CinemaRoomController.deleteCinemaRoom);
+router.delete('/delete/:id', CinemaRoomController.deleteCinemaRoom);
 
 module.exports = router;
