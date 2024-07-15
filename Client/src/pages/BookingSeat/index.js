@@ -9,13 +9,12 @@ const cx = classNames.bind(styles);
 function BookingSeat() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { movieTitle, time, selectedDay, showDate, currentDate: formattedDate } = location.state || {};
+    const { movieTitle, time, selectedDay, showDate, currentDate: formattedDate, cinemaroomId } = location.state || {};
     const [selectedSeats, setSelectedSeats] = useState([]);
+    const [selectedSeatsDetail, setSelectedSeatsDetail] = useState([]);
 
     const handleContinue = () => {
         const totalPrice = calculateTotalPrice(selectedSeats);
-        // Ở đây, bạn có thể xử lý logic để chuyển đến trang thanh toán
-        // với thông tin về các ghế đã chọn và thông tin phim
         navigate('/showtime/bookingfood', {
             state: {
                 selectedSeats,
@@ -31,14 +30,17 @@ function BookingSeat() {
 
     const handleUnselectSeat = (seat) => {
         setSelectedSeats((prevSeats) => prevSeats.filter((s) => s !== seat));
+        setSelectedSeatsDetail((prevSeats) => prevSeats.filter((s) => s !== seat));
     };
 
     const calculateTotalPrice = (seats) => {
         const vipSeatsCount = seats.filter((seat) => isVipSeat(seat)).length;
         const normalSeatsCount = seats.length - vipSeatsCount;
+        const totalPrice = vipSeatsCount * 120000 + normalSeatsCount * 90000;
 
-        return vipSeatsCount * 120000 + normalSeatsCount * 90000;
+        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice);
     };
+
 
     const isVipSeat = (seat) => {
         const row = seat.charCodeAt(0) - 65;
@@ -76,9 +78,16 @@ function BookingSeat() {
                         selectedSeats={selectedSeats}
                         onSeatSelect={(seat) =>
                             setSelectedSeats((prevSeats) =>
-                                prevSeats.includes(seat) ? prevSeats.filter((s) => s !== seat) : [...prevSeats, seat],
+                                prevSeats.includes(seat) ? prevSeats.filter((s) => s !== seat) : [...prevSeats, seat]
                             )
                         }
+                        onSeatSelectDetail={(seat, details) =>
+                            setSelectedSeatsDetail((prevSeats) =>
+                                prevSeats.find((s) => s.seatNumber === seat) ? prevSeats.filter((s) => s.seatNumber !== seat) : [...prevSeats, details]
+                            )
+                        }
+
+                        cinemaroomId={cinemaroomId}
                     />
                     <button
                         className={cx('continue-btn')}

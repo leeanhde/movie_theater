@@ -15,6 +15,7 @@ function MovieList() {
             genre: 'Action',
             rating: 8.5,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         {
             id: 2,
@@ -22,6 +23,7 @@ function MovieList() {
             genre: 'Comedy',
             rating: 7.8,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         {
             id: 3,
@@ -29,6 +31,7 @@ function MovieList() {
             genre: 'Sci-Fi',
             rating: 9.0,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         {
             id: 4,
@@ -36,6 +39,7 @@ function MovieList() {
             genre: 'Drama',
             rating: 8.2,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         {
             id: 5,
@@ -43,6 +47,7 @@ function MovieList() {
             genre: 'Drama',
             rating: 8.2,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         {
             id: 6,
@@ -50,6 +55,7 @@ function MovieList() {
             genre: 'Drama',
             rating: 8.2,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         {
             id: 7,
@@ -57,6 +63,7 @@ function MovieList() {
             genre: 'Drama',
             rating: 8.2,
             imageUrl: 'https://cinema.momocdn.net/img/44707194621265870-rsz_poster_.jpg',
+            cinemaroomId: '668f87d09f7e2cac95e83e51',
         },
         // Add more movies as needed
     ];

@@ -22,11 +22,12 @@ const Payment = () => {
         `${food.foodTitle} x ${food.quantity}`
     ).join(', ');
     const [vnpUrl, setVnpUrl] = useState('');
-
+    const [loading, setLoading] = useState(false);  // Thêm state để theo dõi trạng thái loading khi gửi yêu cầu
+    console.log(selectedSeats)
     useEffect(() => {
         const createPaymentUrl = async () => {
             try {
-                const response = await axios.post('http://localhost:9999/create_payment_url', {
+                const response = await axios.post('http://localhost:9999/api/vnpay/create_payment_url', {
                     amount: totalPrice,
                     orderInfo: `selectedSeats: ${selectedSeats}, Time: ${time}, Date: ${showDate}`,
                 });
@@ -37,6 +38,27 @@ const Payment = () => {
         };
         createPaymentUrl();
     }, [movieTitle, time, showDate, totalPrice]);
+
+    // Hàm gửi yêu cầu để tạo vé mới
+    const handleBookTicket = async () => {
+        setLoading(true);  // Bắt đầu trạng thái loading
+        try {
+            await axios.post('http://localhost:9999/api/booking/bookticket', {
+                userId: 'YOUR_USER_ID',  // Thay thế bằng ID của người dùng
+                scheduleId: 'YOUR_SCHEDULE_ID',  // Thay thế bằng ID của lịch chiếu
+                seats: selectedSeats.map(seat => ({ seatNumber: seat, seatType: seat.includes('A') ? 2 : 1, seatStatus: 0 })),  // Ví dụ, điều chỉnh seatType và seatStatus theo yêu cầu
+                snacks: selectedFoods.map(food => ({ foodId: food._id, foodTitle: food.foodTitle, quantity: food.quantity, foodPrice: food.foodPrice })),
+                totalAmount: totalPrice,
+                paymentMethod: 'vnpay',  // Hoặc giá trị khác tùy thuộc vào phương thức thanh toán
+            });
+            alert('Ticket booked successfully!');
+        } catch (error) {
+            console.error('Failed to book ticket:', error);
+            alert('Failed to book ticket.');
+        } finally {
+            setLoading(false);  // Kết thúc trạng thái loading
+        }
+    };
 
     return (
         <div className={cx('payment-page')}>
@@ -80,6 +102,14 @@ const Payment = () => {
                 Tạm tính <span>{totalPrice.toLocaleString()} đ</span>
             </div>
             <p className={cx('note')}>Ưu đãi (nếu có) sẽ được áp dụng ở bước thanh toán.</p>
+            {/* Thêm nút để gọi API bookTicket */}
+            <button
+                className={cx('book-ticket-btn')}
+                onClick={handleBookTicket}
+                disabled={loading}
+            >
+                {loading ? 'Đang đặt vé...' : 'Đặt vé'}
+            </button>
         </div>
     );
 };

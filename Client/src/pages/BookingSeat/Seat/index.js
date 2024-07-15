@@ -1,29 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './SeatGrid.module.scss';
 
 const cx = classNames.bind(styles);
 
-const SeatGrid = ({ selectedSeats, onSeatSelect }) => {
-    const [bookedSeats] = useState(['A1', 'B5', 'D10', 'E12']);
+const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
+    const [bookedSeats, setBookedSeats] = useState([]);
 
-    const seats = Array(13)
-        .fill(null)
-        .map((_, rowIndex) =>
-            Array(13)
-                .fill(null)
-                .map((_, colIndex) => {
-                    const seatNumber = `${String.fromCharCode(65 + rowIndex)}${colIndex + 1}`;
-                    const isBooked = bookedSeats.includes(seatNumber);
-                    const isSelected = selectedSeats.includes(seatNumber);
-                    const seatType = isBooked ? 'booked' : isSelected ? 'selected' : rowIndex < 6 ? 'vip' : 'normal';
+    useEffect(() => {
+        // Fetch booked seats based on cinemaroomId
+        const fetchBookedSeats = async () => {
+            try {
+                // const response = await fetch(`http://localhost:9999/api/cinemas/${cinemaroomId}/listallseats`);
+                const response = await fetch(`http://localhost:9999/api/cinemas/668f6d640d176253a07a186c/listallseats`);
+                const data = await response.json();
+                setBookedSeats(data);
+            } catch (error) {
+                console.error('Failed to fetch booked seats', error);
+            }
+        };
 
-                    return { seatNumber, seatType, isBooked, isSelected };
-                }),
-        );
+        if (cinemaroomId) {
+            fetchBookedSeats();
+        }
+    }, [cinemaroomId]);
+    console.log(bookedSeats)
+    // Get unique seat rows and columns
+    const rows = [...new Set(bookedSeats.map(seat => seat.seatRow))];
+    const columns = [...new Set(bookedSeats.map(seat => seat.seatColumn))];
+
+    const seats = rows.map(row =>
+        columns.map(column => {
+            const seatNumber = `${row}${column}`;
+            const bookedSeat = bookedSeats.find(seat => seat.seatRow === row && seat.seatColumn === column);
+
+            const isBooked = bookedSeat ? bookedSeat.seatStatus === 1 : false;
+            const isSelected = selectedSeats.includes(seatNumber);
+            const seatType = bookedSeat
+                ? bookedSeat.seatType === 2
+                    ? 'vip'
+                    : 'normal'
+                : 'normal'; // Default to normal if seatType is not defined
+
+            return {
+                seatNumber,
+                seatType: isBooked ? 'booked' : isSelected ? 'selected' : seatType,
+                isBooked,
+                isSelected
+            };
+        })
+    );
 
     const handleSeatClick = (seatNumber) => {
-        if (bookedSeats.includes(seatNumber)) return;
+        const seatRow = seatNumber.charAt(0);
+        const seatColumn = parseInt(seatNumber.slice(1), 10);
+        if (bookedSeats.some(seat => seat.seatRow === seatRow && seat.seatColumn === seatColumn && seat.seatStatus === 1)) return;
         onSeatSelect(seatNumber);
     };
 
