@@ -11,8 +11,8 @@ const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
         // Fetch booked seats based on cinemaroomId
         const fetchBookedSeats = async () => {
             try {
-                // const response = await fetch(`http://localhost:9999/api/cinemas/${cinemaroomId}/listallseats`);
-                const response = await fetch(`http://localhost:9999/api/cinemas/668f6d640d176253a07a186c/listallseats`);
+                const response = await fetch(`http://localhost:9999/api/cinemas/${cinemaroomId}/listallseats`);
+                // const response = await fetch(`http://localhost:9999/api/cinemas/668f6d640d176253a07a186c/listallseats`);
                 const data = await response.json();
                 setBookedSeats(data);
             } catch (error) {
