@@ -44,3 +44,14 @@ export const getMoviesList = async () => {
         throw error;
     }
 };
+
+export const getMovieDetail = async (id) => {
+    try {
+        const res = await httpRequest.get('movies/detail/' + id);
+
+            return res;
+    } catch (error) {
+        console.error('Error fetching movies now showing:', error.response || error);
+        throw error;
+    }
+};

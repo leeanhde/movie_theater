@@ -179,7 +179,15 @@ async function getMovieDetail(req, res, next) {
         if (!movie) {
             return res.status(404).json({ message: "Movie not found" }); 
         }
-
+if (movie.types && movie.types.length > 0) {
+    movie.types.forEach(type => {
+      console.log(type._id);
+      console.log(type.name);
+      console.log(type);
+    });
+  } else {
+    console.log('No types available');
+  }
         const movieDetail = {
             _id: movie._id,
             movieNameEnglish: movie.movieNameEnglish,
@@ -193,14 +201,14 @@ async function getMovieDetail(req, res, next) {
             largeImage: movie.largeImage,
             smallImage: movie.smallImage,
             movieProductionCompany: movie.movieProductionCompany,
-            promotionId: movie.promotionId?.map(p => p.title),
-            types: movie.types?.map(t => t.typeName),
+            promotionId: movie.promotionId?.map(promotion => promotion.title),
+            types: movie.types?.map(type => type.name),
             deleted: movie.deleted,
             createdAt: movie.createdAt,
             updatedAt: movie.updatedAt
         };
 
-        res.status(200).json(movieDetail); 
+        res.status(200).json(movie); 
     } catch (error) {
         next(error); 
     }
