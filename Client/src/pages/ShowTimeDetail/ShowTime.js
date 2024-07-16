@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 function ShowTimeDetail() {
     const cx = classNames.bind(styles);
     const navigate = useNavigate();
-
+    const cinemaroomId = '668f87d09f7e2cac95e83e51';
     // Dummy data for showtimes
     const showtimes = [
         {
@@ -46,7 +46,7 @@ function ShowTimeDetail() {
         const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
         navigate('/showtime/bookingseat', {
-            state: { movieTitle, time, selectedDay, showDate, currentDate: formattedDate },
+            state: { movieTitle, time, selectedDay, showDate, currentDate: formattedDate, cinemaroomId },
         });
     };
 

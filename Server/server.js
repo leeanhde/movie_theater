@@ -8,9 +8,15 @@ const db = require("./model/index");
 const routes = require('./routes');
 const app = express();
 
-app.use(cors());
+const corsOptions = {
+  origin: '*', 
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization, x-access-token',
+};
+
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
-app.use(cors());
+app.options('*', cors(corsOptions));
 app.use(morgan("dev"));
 //router toi web root
 app.get("/", (req, res) => {

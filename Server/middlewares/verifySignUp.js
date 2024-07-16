@@ -21,6 +21,7 @@ async function checkExistUser(req, res, next){
 
 async function checkExistRoles(req, res, next){
     try {
+        console.log('Checking' + req.body.roles);
         if(req.body.roles){
             let ROLES = [];
             const roles = await Role.find({});
@@ -32,6 +33,8 @@ async function checkExistRoles(req, res, next){
                 }
             }
             next();
+        } else {
+            throw httpErrors.BadRequest("Include role");
         }
     } catch (error) {
         next(error);

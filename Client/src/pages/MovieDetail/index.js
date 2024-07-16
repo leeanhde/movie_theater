@@ -43,7 +43,7 @@ const MovieDetail = () => {
                     nibh nisi tincidunt velit, vitae consequat massa ipsum non dolor.
                 </p>
             </div>
-            <ShowTimeDetail />
+            <ShowTimeDetail/>
             <div className={cx('comment')}>
                 <h3 className={cx('reviewsTitle')}>Bình luận từ người xem</h3>
                 <div className={cx('commentList')}>

@@ -52,16 +52,11 @@ async function login(req, res, next){
             throw createHttpError.BadRequest("Email or password is required");
 
         const existUser = await User.findOne({email: req.body.email}).populate("roles", "-__v").exec();
-        console.log(existUser);
         if(!existUser){
             throw createHttpError.BadRequest("This email does not exist");
         }
-        // const isMatchPassword = bcrypt.compareSync(req.body.password,existUser.password);
-        // console.log(existUser.password);
-        // console.log(existUser.email);
-        // console.log(req.body.password);
-        // console.log(isMatchPassword);
-        if(req.body.password !== existUser.password){
+        const isMatchPassword = bcrypt.compareSync(req.body.password,existUser.password);
+        if(!isMatchPassword){
             throw createHttpError.BadRequest("Password incorrect");
         }
         // Generate AccessToken
