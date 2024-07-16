@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
 import { Link } from 'react-router-dom';
+import * as authService from '~/services/auth.service';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
 function Register() {
     const [formData, setFormData] = useState({
-        account: '',
+        username: '',
         password: '',
         confirmPassword: '',
         fullName: '',
@@ -27,10 +29,28 @@ function Register() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        if (formData.confirmPassword !== formData.password) {
+            alert('Confirm Password does not match Password');
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            alert('Invalid email format');
+            return;
+        }
+        try {
+            const res = await authService.register({ ...formData, roles: ['member'] });
+            console.log('🚀 ~ handleSubmit ~ res:', res);
+        } catch (error) {
+            console.log("🚀 ~ handleSubmit ~ error:", error.response.data.message)
+        }
+
+
+        // const data =await authService.register(formData);
+        // console.log("🚀 ~ handleSubmit ~ data:", data)
         // Handle form submission here
-        console.log('Form Data:', formData);
     };
 
     return (
@@ -41,7 +61,13 @@ function Register() {
                     key !== 'gender' ? (
                         <div key={key} className={cx('form-group')}>
                             <input
-                                type={key === 'password' || key === 'confirmPassword' ? 'password' : 'text'}
+                                type={
+                                    key === 'password' || key === 'confirmPassword'
+                                        ? 'password'
+                                        : key === 'dob'
+                                        ? 'date'
+                                        : 'text'
+                                }
                                 name={key}
                                 placeholder={key.charAt(0).toUpperCase() + key.slice(1)}
                                 value={formData[key]}
