@@ -14,7 +14,8 @@ function BookingFood() {
 
     const handleContinue = () => {
         const totalFoodPrice = calculateTotalPrice(selectedFoods);
-        const totalPrice = seatPrice + totalFoodPrice;
+        const seatPriceNumber = Number(seatPrice.replace(/[^0-9]/g, '')); // Chuyển đổi seatPrice thành số
+        const totalPrice = seatPriceNumber + totalFoodPrice;
 
         navigate('/showtime/bookingseat/payment', {
             state: {
@@ -29,7 +30,6 @@ function BookingFood() {
             },
         });
     };
-    console.log(selectedSeats)
 
     const handleFoodSelect = (food) => {
         setSelectedFoods((prevFoods) => {
@@ -62,7 +62,7 @@ function BookingFood() {
     };
 
     const totalFoodPrice = calculateTotalPrice(selectedFoods);
-    const totalPrice = seatPrice + totalFoodPrice;
+    const totalPrice = Number(seatPrice.replace(/[^0-9]/g, '')) + totalFoodPrice;
 
     return (
         <div className={cx('booking-food')}>

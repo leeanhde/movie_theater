@@ -83,6 +83,14 @@ const Payment = () => {
                 Tạm tính <span>{totalPrice}</span>
             </div>
             <p className={cx('note')}>Ưu đãi (nếu có) sẽ được áp dụng ở bước thanh toán.</p>
+            {/* Thêm nút để gọi API bookTicket */}
+            <button
+                className={cx('book-ticket-btn')}
+                onClick={handleBookTicket}
+                disabled={loading}
+            >
+                {loading ? 'Đang đặt vé...' : 'Đặt vé'}
+            </button>
         </div>
     );
 };
