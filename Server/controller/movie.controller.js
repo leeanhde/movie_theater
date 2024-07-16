@@ -18,6 +18,7 @@ async function createMovie(req, res, next) {
             movieProductionCompany: req.body.movieProductionCompany,
             promotionId: req.body.promotionId,
             types: req.body.types,
+            cinemaRoomId: req.body.cinemaRoomId
         });
         const savedMovie = await newMovie.save();
         res.status(201).json(savedMovie);
@@ -43,7 +44,8 @@ async function editMovie(req, res, next) {
             movieProductionCompany: req.body.movieProductionCompany,
             promotionId: req.body.promotionId,
             types: req.body.types,
-            deleted: req.body.deleted
+            deleted: req.body.deleted,
+            cinemaRoomId: req.body.cinemaRoomId
         };
         const updatedMovie = await Movie.findByIdAndUpdate(MovieId, updatedData, { new: true });
         res.status(200).json(updatedMovie);
@@ -176,18 +178,7 @@ async function getMovieDetail(req, res, next) {
         const movieId = req.params.id; 
         const movie = await Movie.findById(movieId).populate("promotionId types"); 
         
-        if (!movie) {
-            return res.status(404).json({ message: "Movie not found" }); 
-        }
-if (movie.types && movie.types.length > 0) {
-    movie.types.forEach(type => {
-      console.log(type._id);
-      console.log(type.name);
-      console.log(type);
-    });
-  } else {
-    console.log('No types available');
-  }
+        
         const movieDetail = {
             _id: movie._id,
             movieNameEnglish: movie.movieNameEnglish,
@@ -208,7 +199,7 @@ if (movie.types && movie.types.length > 0) {
             updatedAt: movie.updatedAt
         };
 
-        res.status(200).json(movie); 
+        res.status(200).json(movieDetail); 
     } catch (error) {
         next(error); 
     }

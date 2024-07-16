@@ -7,6 +7,7 @@ const ticketSchema = new mongoose.Schema({
     roomId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'cinemarooms' }],
     scheduleId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'schedules' }],
     seatIds: [{ type: mongoose.Schema.Types.ObjectId, ref: 'seats' }],
+    movieId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'movie' }]
 }, { timestamps: true });
 
 module.exports = mongoose.model('Ticket', ticketSchema);

@@ -81,7 +81,7 @@ function Search() {
                     <input
                         ref={inputRef}
                         value={searchValue}
-                        placeholder="Search accounts and videos"
+                        placeholder="Search movies"
                         spellCheck={false}
                         onChange={handleChange}
                         onFocus={() => setShowResult(true)}
