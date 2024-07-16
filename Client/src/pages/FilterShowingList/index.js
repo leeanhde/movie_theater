@@ -3,9 +3,13 @@ import classNames from 'classnames/bind';
 import styles from './FilterShowingList.module.scss';
 import FilterBar from './FilterBar/index';
 import { useNavigate } from 'react-router-dom';
-
-const FilterShowingList = ({ movies }) => {
+import * as movieService from '~/services/movieService';
+const FilterShowingList = () => {
     const cx = classNames.bind(styles);
+    const [movies, setMovies] = useState([]);
+    const [error, setError] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
     const [currentPage, setCurrentPage] = useState(1);
     const moviesPerPage = 5;
     const [filteredMovies, setFilteredMovies] = useState(movies);
@@ -14,6 +18,26 @@ const FilterShowingList = ({ movies }) => {
     const [year, setYear] = useState('');
     const [search, setSearch] = useState('');
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchMoviesNowShowing = async () => {
+            try {
+                setIsLoading(true);
+                const movies = await movieService.getMoviesList();
+                console.log('Fetched movies:', movies);
+                setMovies(movies);
+                setError(null);
+            } catch (error) {
+                console.error('Error fetching movies now showing:', error);
+                setError('Failed to load movies. Please try again later.');
+                setMovies([]);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchMoviesNowShowing();
+    }, []);
 
     useEffect(() => {
         filterMovies();
@@ -50,6 +74,14 @@ const FilterShowingList = ({ movies }) => {
         navigate('/moviedetail', { state: { movie } });
     };
 
+    if (isLoading) {
+        return <div className={cx('loading')}>Loading movies...</div>;
+    }
+
+    if (error) {
+        return <div className={cx('error')}>{error}</div>;
+    }
+
     return (
         <div className={cx('movieShowingSection')}>
             <h2 className={cx('movieShowingTitle')}>Phim đang chiếu</h2>
@@ -63,21 +95,25 @@ const FilterShowingList = ({ movies }) => {
                 search={search}
                 setSearch={setSearch}
             />
-            <div className={cx('movieList')}>
-                {currentMovies.map((movie) => (
-                    <div key={movie.id} className={cx('movieCard')} onClick={() => handleMovieClick(movie)}>
-                        <img src={movie.imageUrl} alt={movie.title} className={cx('movieImage')} />
-                        <h3 className={cx('movieTitle')}>{movie.title}</h3>
-                        <p className={cx('movieShowTimes')}>{movie.genre}</p>
-                        <div className={cx('movieRating')}>
-                            <svg className={cx('starIcon')} viewBox="0 0 24 24">
-                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                            </svg>
-                            {movie.rating}
+            {movies.length > 0 ? (
+                <div className={cx('movieList')}>
+                    {movies.map((movie) => (
+                        <div key={movie.id} className={cx('movieCard')} onClick={() => handleMovieClick(movie)}>
+                            <img src={movie.largeImage} alt={movie.smallImage} className={cx('movieImage')} />
+                            <h3 className={cx('movieTitle')}>{movie.movieNameEnglish}</h3>
+                            <p className={cx('movieShowTimes')}>{movie.director}</p>
+                            <div className={cx('movieRating')}>
+                                <svg className={cx('starIcon')} viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                                {movie.duration}
+                            </div>
                         </div>
-                    </div>
-                ))}
-            </div>
+                    ))}
+                </div>
+            ) : (
+                <p className={cx('noMovies')}>No movies available at the moment.</p>
+            )}
             <div className={cx('pagination')}>
                 {Array.from({ length: totalPages }, (_, i) => (
                     <button

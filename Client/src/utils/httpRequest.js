@@ -3,9 +3,14 @@ import axios from 'axios';
 const httpRequest = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
 });
+const accessToken = localStorage.getItem('accessToken') || '';
+const headerConfig = {
+    'x-access-token': accessToken,
+};
 
 export const get = async (path, options = {}) => {
-    const response = await httpRequest.get(path, options);
+    console.log(headerConfig);
+    const response = await httpRequest.get(path, { ...options, headers: { ...headerConfig } });
     return response.data;
 };
 

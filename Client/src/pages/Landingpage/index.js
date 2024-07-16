@@ -13,7 +13,10 @@ function Landingpage() {
                     Experience the best movies in our theater with top-notch facilities and comfortable seating. Enjoy a
                     wide range of snacks and beverages.
                 </p>
-                <button className={cx('btn')}>Learn More</button>
+                <button className={cx('btn')}> 
+                    <Link to="/login" >
+                        Log in
+                    </Link></button>
             </div>
         </div>
     );
