@@ -10,6 +10,7 @@ const UserRouter = require("./user.route");
 const BookingRouter = require("./booking.route");
 const ScheduleRouter = require('./schedule.route')
 const foodRouter = require('./food.route')
+const vnpay = require('./vnpay.route')
 
 router.use('/movies', movieRouter);
 router.use('/types', TypeRouter);
@@ -21,5 +22,5 @@ router.use('/user', UserRouter);
 router.use('/booking', BookingRouter);
 router.use('/schedule', ScheduleRouter)
 router.use('/food', foodRouter);
-
+router.use('/payment', vnpay);
 module.exports = router;

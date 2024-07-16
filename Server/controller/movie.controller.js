@@ -108,25 +108,6 @@ async function nowShowingMovies(req, res, next) {
             fromDate: { $lte: currentDate },
             toDate: { $gte: currentDate }
         }).populate("promotionId types");
-        
-        // const nowShowingList = movies.map(m => ({
-        //     _id: m._id,
-        //     movieNameEnglish: m.movieNameEnglish,
-        //     movieNameVn: m.movieNameVn,
-        //     director: m.director,
-        //     actor: m.actor,
-        //     duration: m.duration,
-        //     fromDate: new Date(m.fromDate).toDateString('en-GB'),
-        //     toDate: new Date(m.toDate).toDateString('en-GB'),
-        //     content: m.content,
-        //     largeImage: m.largeImage,
-        //     smallImage: m.smallImage,
-        //     movieProductionCompany: m.movieProductionCompany,
-        //     promotionId: m.promotionId?.map(p => p.title),
-        //     types: m.types?.map(t => t.typeName),
-        //     deleted: m.deleted
-        // }));
-
         const nowShowingList = movies.map(m => {
             const fromDate = new Date(m.fromDate);
             const toDate = new Date(m.toDate);
@@ -152,7 +133,7 @@ async function nowShowingMovies(req, res, next) {
                 };
             }
         }).filter(m => m !== undefined); // Filter out undefined values
-
+        console.log(nowShowingList);
         res.status(200).json(nowShowingList);
     } catch (error) {
         next(error);

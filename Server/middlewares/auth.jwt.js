@@ -9,7 +9,7 @@ const { user: User, role: Role } = db;
 async function verifyToken(req, res, next) {
   try {
     const token = req.headers["x-access-token"];
-    if (!token) throw createHttpError.Unauthorized("Token not provided");
+    if (!token) return next(createHttpError.Unauthorized("Token not provided"));
 
     // Verify token
     jwt.verify(token, config.secret, async (err, decode) => {
@@ -18,7 +18,7 @@ async function verifyToken(req, res, next) {
           err instanceof JsonWebTokenError
             ? "Unauthorized! Access Token was expired!"
             : err.message;
-        throw createHttpError.Unauthorized(message);
+            if (!token) return next(createHttpError.Unauthorized("Token not provided"));
       }
       req.userId = decode.id;
       const user = await User.findById(decode.id, {
