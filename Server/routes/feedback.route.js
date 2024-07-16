@@ -20,6 +20,8 @@ FeedbackRouter.get("/getAll", FeedbackController.getAllFeedbacks);
 
 FeedbackRouter.get("/get/user/:userId", FeedbackController.getUserFeedbacks);
 
+FeedbackRouter.get("/get/movie/:movieId", FeedbackController.getMovieFeedbacks);
+
 FeedbackRouter.put("/:feedbackId",  FeedbackController.updateFeedback);
 
 FeedbackRouter.delete("/:feedbackId",  FeedbackController.deleteFeedback);

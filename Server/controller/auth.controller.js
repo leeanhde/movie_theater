@@ -52,6 +52,7 @@ async function login(req, res, next){
             throw createHttpError.BadRequest("Email or password is required");
 
         const existUser = await User.findOne({email: req.body.email}).populate("roles", "-__v").exec();
+        console.log(existUser);
         if(!existUser){
             throw createHttpError.BadRequest("This email does not exist");
         }
@@ -73,7 +74,10 @@ async function login(req, res, next){
             algorithm: "HS256",
             expiresIn: config.jwtRefreshExpiration
         });
-        let authorities = [existUser.roles];
+        let authorities = [];
+        for(let i=0; i<existUser.roles.length; i++){
+            authorities.push(existUser.roles[i].name);
+        }
 
         // Send object to Client
         res.status(200).json({

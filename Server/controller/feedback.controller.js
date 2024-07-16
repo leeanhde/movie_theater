@@ -41,29 +41,35 @@ const createFeedback = async (req, res, next) => {
 
 const getAllFeedbacks = async (req, res, next) => {
   try {
-    const users = await User.find({})
+    const users = await Feedback.find({})
       .populate({
-        path: 'feedbacks',
-        populate: {
-          path: 'movieId',
-          model: 'movie'
-        }
-      })
-      .exec();
-
-    const feedbacks = users.reduce((acc, user) => {
-      user.feedbacks.forEach(feedback => {
-        const feedbackObject = feedback.toObject();
-        delete feedbackObject.movieId; 
-    
-        acc.push({
-          ...feedbackObject,
-          username: user.username,
-          movie: feedback.movieId  
+      path: 'movieId',
+     model: 'movie'
+      }).populate({
+     path: 'userId',
+    model: 'user'
         });
-      });
-      return acc;
-    }, []);
+
+        const feedbacks = users.map(feedback => {
+          const feedbackObj = feedback.toObject();
+          delete feedbackObj.movieId
+      delete feedbackObj.userId
+      return { ...feedbackObj ,movie : feedback.movieId , user : feedback.userId};
+        });
+    // console.log(users)
+    // const feedbacks = users.reduce((acc, user) => {
+    //   user.feedbacks.forEach(feedback => {
+    //     const feedbackObject = feedback.toObject();
+    //     delete feedbackObject.movieId; 
+        
+    //     acc.push({
+    //       ...feedbackObject,
+    //       username: user.username,
+    //       movie: feedback.movieId  
+    //     });
+    //   });
+    //   return acc;
+    // }, []);
     
     res.status(200).json({ feedbacks });
   } catch (error) {
@@ -95,7 +101,34 @@ const getUserFeedbacks = async (req, res, next) => {
     next(error);
   }
 };
+const getMovieFeedbacks = async (req, res, next) => {
+  try {
+    const { movieId } = req.params;
 
+    const movie = await Feedback.find({movieId}).populate({
+       path: 'movieId',
+      model: 'movie'
+    }).populate({
+      path: 'userId',
+     model: 'user'
+   });
+    console.log(movie);
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found", data: null });
+    }
+
+    const feedbacks = movie.map(feedback => {
+      const feedbackObj = feedback.toObject();
+      delete feedbackObj.movieId
+      delete feedbackObj.userId
+      return { ...feedbackObj ,movie : feedback.movieId , user : feedback.userId};
+    });
+
+    res.status(200).json({ feedbacks });
+  } catch (error) {
+    next(error);
+  }
+};
 const updateFeedback = async (req, res, next) => {
   try {
     const { feedbackId } = req.params;
@@ -133,4 +166,4 @@ const deleteFeedback = async (req, res, next) => {
   }
 };
 
-module.exports = { createFeedback , getAllFeedbacks, getUserFeedbacks, updateFeedback, deleteFeedback };
+module.exports = { createFeedback , getAllFeedbacks, getUserFeedbacks, updateFeedback, deleteFeedback ,getMovieFeedbacks };

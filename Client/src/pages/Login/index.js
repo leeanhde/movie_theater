@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 import React, { useContext, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import axios from 'axios';
+import AuthContext from '../../utils/AuthContext';
 
 const cx = classNames.bind(styles);
 
@@ -9,47 +11,31 @@ function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
-
-    const handleEmailChange = (e) => {
-        setEmail(e.target.value);
-    };
-
-    const handlePasswordChange = (e) => {
-        setPassword(e.target.value);
-    };
-
-    const handleLogin = (role) => {
-        const redirectPath = getRedirectPath(role);
-        navigate(redirectPath);
-    };
-
-    const getRedirectPath = (role) => {
-        switch (role) {
-            case 'user':
-                return '/';
-            case 'staff':
-                return '/staff';
-            case 'admin':
-                return '/admin';
-            case 'supervisor':
-                return '/supervisor';
-            default:
-                return '/login';
-        }
-    };
-
-    const handleSubmit = (e) => {
+    const { setAuth } = useContext(AuthContext);
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (email === 'user@gmail.com' && password === '123') {
-            handleLogin('user');
-        } else if (email === 'staff' && password === '123') {
-            handleLogin('staff');
-        } else if (email === 'admin' && password === '123') {
-            handleLogin('admin');
-        } else if (email === 'supervisor' && password === '123') {
-            handleLogin('supervisor');
-        } else {
-            alert('Invalid credentials');
+        try {
+            const response = await axios.post('http://localhost:9999/api/auth/signin', { email, password });
+            const { id, email: userEmail, roles, accessToken } = response.data;
+            console.log(response.data);
+            localStorage.setItem('accessToken', accessToken);
+            localStorage.setItem('user', JSON.stringify({ id, email, roles }));
+            setAuth({ id, email: userEmail, roles, accessToken });
+            // Điều hướng dựa trên vai trò
+            if (roles.includes('admin')) {
+                navigate('/managemovie');
+            } else if (roles.includes('supervisor')) {
+                navigate('/ticketcodemanagement');
+            } else if (roles.includes('staff')) {
+                navigate('/schedulesstaff');
+            } else if (roles.includes('member')) {
+                navigate('/home');
+            } else {
+                navigate('/');
+            }
+        } catch (error) {
+            console.error('Đăng nhập thất bại:', error);
+            alert('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập.');
         }
     };
 
@@ -64,7 +50,7 @@ function Login() {
                         id="email"
                         placeholder="Email"
                         value={email}
-                        onChange={handleEmailChange}
+                        onChange={(e) => setEmail(e.target.value)}
                         required
                         className={cx('input')}
                     />
@@ -75,7 +61,7 @@ function Login() {
                         id="password"
                         placeholder="Password"
                         value={password}
-                        onChange={handlePasswordChange}
+                        onChange={(e) => setPassword(e.target.value)}
                         required
                         className={cx('input')}
                     />

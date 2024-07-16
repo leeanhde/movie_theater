@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useLocation } from 'react-router-dom';
-import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from './Payment.module.scss';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -10,7 +10,6 @@ const Payment = () => {
     const location = useLocation();
     const {
         selectedSeats,
-        selectedFoods,
         movieTitle,
         time,
         selectedDay,
@@ -18,48 +17,25 @@ const Payment = () => {
         currentDate: formattedDate,
         totalPrice,
     } = location.state || {};
-    const foodListString = selectedFoods.map(food =>
-        `${food.foodTitle} x ${food.quantity}`
-    ).join(', ');
-    const [vnpUrl, setVnpUrl] = useState('');
-    const [loading, setLoading] = useState(false);  // Thêm state để theo dõi trạng thái loading khi gửi yêu cầu
-    console.log(selectedSeats)
-    useEffect(() => {
-        const createPaymentUrl = async () => {
-            try {
-                const response = await axios.post('http://localhost:9999/api/vnpay/create_payment_url', {
-                    amount: totalPrice,
-                    orderInfo: `selectedSeats: ${selectedSeats}, Time: ${time}, Date: ${showDate}`,
-                });
-                setVnpUrl(response.data.vnpUrl); // Update vnpUrl state
-            } catch (error) {
-                console.error('Error creating payment URL:', error);
-            }
-        };
-        createPaymentUrl();
-    }, [movieTitle, time, showDate, totalPrice]);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    // Hàm gửi yêu cầu để tạo vé mới
-    const handleBookTicket = async () => {
-        setLoading(true);  // Bắt đầu trạng thái loading
+        const data = {
+            amount: parseInt(totalPrice),
+        };
+
         try {
-            await axios.post('http://localhost:9999/api/booking/bookticket', {
-                userId: 'YOUR_USER_ID',  // Thay thế bằng ID của người dùng
-                scheduleId: 'YOUR_SCHEDULE_ID',  // Thay thế bằng ID của lịch chiếu
-                seats: selectedSeats.map(seat => ({ seatNumber: seat, seatType: seat.includes('A') ? 2 : 1, seatStatus: 0 })),  // Ví dụ, điều chỉnh seatType và seatStatus theo yêu cầu
-                snacks: selectedFoods.map(food => ({ foodId: food._id, foodTitle: food.foodTitle, quantity: food.quantity, foodPrice: food.foodPrice })),
-                totalAmount: totalPrice,
-                paymentMethod: 'vnpay',  // Hoặc giá trị khác tùy thuộc vào phương thức thanh toán
-            });
-            alert('Ticket booked successfully!');
+            const response = await axios.post('http://localhost:9999/api/payment/create_payment_url', data);
+            console.log(response.data.vnpUrl);
+            const { vnpUrl } = response.data;
+
+            if (vnpUrl) {
+                window.open(vnpUrl, '_blank');
+            }
         } catch (error) {
-            console.error('Failed to book ticket:', error);
-            alert('Failed to book ticket.');
-        } finally {
-            setLoading(false);  // Kết thúc trạng thái loading
+            console.error('Error creating payment URL:', error);
         }
     };
-
     return (
         <div className={cx('payment-page')}>
             <div className={cx('movie-details')}>
@@ -79,27 +55,32 @@ const Payment = () => {
                         Phòng chiếu: <span>P5</span>
                     </p>
                     <p>
-                        Ghế: <span>{selectedSeats.join(', ')}</span>
-                    </p>
-                    <p>
-                        Đồ ăn: <span>{foodListString}</span>
-                    </p>
-                    <p>
                         Định dạng: <span>2D Lồng tiếng</span>
+                    </p>
+                    <p>
+                        Ghế: <span>{selectedSeats}</span>
                     </p>
                 </div>
             </div>
             <div className={cx('qr-code')}>
                 <h3>Quét mã QR bằng MoMo để thanh toán</h3>
-                {vnpUrl ? (
-                    <img src={`https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(vnpUrl)}&size=200x200`} alt="QR Code" className={cx('qr-image')} />
-                ) : (
-                    <p>Đang tạo QR Code...</p>
-                )}
+                <div className={cx('qr-image')}>{/* Ảnh QR code */}</div>
                 <p>Sử dụng App MoMo hoặc ứng dụng Camera hỗ trợ QR code để quét mã.</p>
+                <button
+                    style={{
+                        fontSize: '20px',
+                        padding: '10px 25px',
+                        backgroundColor: '#6ec4ff',
+                        border: '1px solid blue',
+                        borderRadius: '20px',
+                    }}
+                    onClick={handleSubmit}
+                >
+                    Submit
+                </button>
             </div>
             <div className={cx('total-price')}>
-                Tạm tính <span>{totalPrice.toLocaleString()} đ</span>
+                Tạm tính <span>{totalPrice}</span>
             </div>
             <p className={cx('note')}>Ưu đãi (nếu có) sẽ được áp dụng ở bước thanh toán.</p>
             {/* Thêm nút để gọi API bookTicket */}

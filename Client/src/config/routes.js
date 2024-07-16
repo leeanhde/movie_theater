@@ -1,11 +1,11 @@
 const routes = {
     //Guest
-    landingpage: 'landingpage',
+    landingpage: '/',
     login: '/login',
     register: '/register',
 
     //user router
-    home: '/',
+    home: '/home',
     feedback: '/feedback',
     profile: '/@:nickname',
     upload: '/upload',
