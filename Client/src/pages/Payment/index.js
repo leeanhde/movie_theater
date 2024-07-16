@@ -17,46 +17,25 @@ const Payment = () => {
         currentDate: formattedDate,
         totalPrice,
     } = location.state || {};
-    const foodListString = selectedFoods.map(food =>
-        `${food.foodTitle} x ${food.quantity}`
-    ).join(', ');
-    const [vnpUrl, setVnpUrl] = useState('');
-    const [loading, setLoading] = useState(false);  // Thêm state để theo dõi trạng thái loading khi gửi yêu cầu
-    console.log(selectedSeats)
-    useEffect(() => {
-        const createPaymentUrl = async () => {
-            try {
-                const response = await axios.post('http://localhost:9999/api/vnpay/create_payment_url', {
-                    amount: totalPrice,
-                    orderInfo: `selectedSeats: ${selectedSeats}, Time: ${time}, Date: ${showDate}`,
-                });
-                setVnpUrl(response.data.vnpUrl); // Update vnpUrl state
-            } catch (error) {
-                console.error('Error creating payment URL:', error);
-            }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const data = {
+            amount: parseInt(totalPrice),
         };
-    })
-    // Hàm gửi yêu cầu để tạo vé mới
-    const handleBookTicket = async () => {
-        setLoading(true);  // Bắt đầu trạng thái loading
+
         try {
-            await axios.post('http://localhost:9999/api/booking/bookticket', {
-                userId: 'YOUR_USER_ID',  // Thay thế bằng ID của người dùng
-                scheduleId: 'YOUR_SCHEDULE_ID',  // Thay thế bằng ID của lịch chiếu
-                seats: selectedSeats.map(seat => ({ seatNumber: seat, seatType: seat.includes('A') ? 2 : 1, seatStatus: 0 })),  // Ví dụ, điều chỉnh seatType và seatStatus theo yêu cầu
-                snacks: selectedFoods.map(food => ({ foodId: food._id, foodTitle: food.foodTitle, quantity: food.quantity, foodPrice: food.foodPrice })),
-                totalAmount: totalPrice,
-                paymentMethod: 'vnpay',  // Hoặc giá trị khác tùy thuộc vào phương thức thanh toán
-            });
-            alert('Ticket booked successfully!');
+            const response = await axios.post('http://localhost:9999/api/payment/create_payment_url', data);
+            console.log(response.data.vnpUrl);
+            const { vnpUrl } = response.data;
+
+            if (vnpUrl) {
+                window.open(vnpUrl, '_blank');
+            }
         } catch (error) {
-            console.error('Failed to book ticket:', error);
-            alert('Failed to book ticket.');
-        } finally {
-            setLoading(false);  // Kết thúc trạng thái loading
+            console.error('Error creating payment URL:', error);
         }
     };
-
     return (
         <div className={cx('payment-page')}>
             <div className={cx('movie-details')}>
