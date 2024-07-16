@@ -25,7 +25,7 @@ const Payment = () => {
         };
 
         try {
-            const response = await axios.post('http://localhost:9999/api/payment/create_payment_url', data);
+            const response = await axios.post('http://localhost:9999/api/vnpay/create_payment_url', data);
             console.log(response.data.vnpUrl);
             const { vnpUrl } = response.data;
 
@@ -86,10 +86,10 @@ const Payment = () => {
             {/* Thêm nút để gọi API bookTicket */}
             <button
                 className={cx('book-ticket-btn')}
-                onClick={handleBookTicket}
-                disabled={loading}
+                // onClick={handleBookTicket}
+                // disabled={loading}
             >
-                {loading ? 'Đang đặt vé...' : 'Đặt vé'}
+                {/* {loading ? 'Đang đặt vé...' : 'Đặt vé'} */}
             </button>
         </div>
     );
