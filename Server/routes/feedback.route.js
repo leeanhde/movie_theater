@@ -18,6 +18,8 @@ FeedbackRouter.post("/create", JWT.verifyToken, FeedbackController.createFeedbac
 
 FeedbackRouter.get("/getAll", FeedbackController.getAllFeedbacks);
 
+FeedbackRouter.get("/getAllByMovie", FeedbackController.getAllMoviesWithFeedback);
+
 FeedbackRouter.get("/get/user/:userId", FeedbackController.getUserFeedbacks);
 
 FeedbackRouter.get("/get/movie/:movieId", FeedbackController.getMovieFeedbacks);

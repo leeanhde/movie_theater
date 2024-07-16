@@ -9,6 +9,8 @@ const cx = classNames.bind(styles);
 function BookingSeat() {
     const location = useLocation();
     const navigate = useNavigate();
+
+    /// no lay tu cai state dc truyen voa
     const { movieTitle, time, selectedDay, showDate, currentDate: formattedDate, cinemaroomId } = location.state || {};
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [selectedSeatsDetail, setSelectedSeatsDetail] = useState([]);
