@@ -73,7 +73,7 @@ const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
                         <div
                             key={`${rowIndex}-${colIndex}`}
                             className={cx('seat', seat.seatType)}
-                            onClick={() => handleSeatClick(seat.seatNumber)}
+                            onClick={!seat.isBooked ? () => handleSeatClick(seat.seatNumber) : null}
                             disabled={seat.isBooked}
                         >
                             {seat.seatNumber}

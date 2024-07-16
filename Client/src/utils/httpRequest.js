@@ -9,7 +9,6 @@ const httpRequest = axios.create({
 });
 
 export const get = async (path, options = {}) => {
-    console.log(headerConfig);
     const response = await httpRequest.get(path,options);
     return response.data;
 };

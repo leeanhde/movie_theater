@@ -9,12 +9,12 @@ const Comment = ({ comment, isSelected, onCommentClick }) => {
         <div className={cx('comment', { selected: isSelected })} onClick={() => onCommentClick(comment)}>
             <div className={cx('reviewHeader')}>
                 <div className={cx('reviewerInfo')}>
-                    <span className={cx('reviewer')}>{comment.username}</span>
+                    <span className={cx('reviewer')}>{comment?.userId?.username}</span>
                     <span className={cx('reviewerSource')}>hôm qua</span>
                 </div>
                 {comment.rating !== null && <div className={cx('reviewRating')}>{comment.rating}/10</div>}
             </div>
-            <p className={cx('reviewContent')}>{comment.comment}</p>
+            <p className={cx('reviewContent')}>{comment.content}</p>
         </div>
     );
 };

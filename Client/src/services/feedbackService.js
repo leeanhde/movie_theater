@@ -29,3 +29,12 @@ export const getAllFeedback = async () => {
         throw error;
     }
 };
+export const getAllFeedbackByMovie = async () => {
+    try {
+        const res = await httpRequest.get('feedbacks/getAllByMovie');
+            return res;
+    } catch (error) {
+        console.error('Error fetching movies now showing:', error.response || error);
+        throw error;
+    }
+};
