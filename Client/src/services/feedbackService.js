@@ -38,3 +38,14 @@ export const getAllFeedbackByMovie = async () => {
         throw error;
     }
 };
+
+export const getFeedbackfu = async (id) => {
+    try {
+        const res = await httpRequest.get('feedbacks/get/movie/' + id);
+
+            return res;
+    } catch (error) {
+        console.error('Error fetching movies now showing:', error.response || error);
+        throw error;
+    }
+};

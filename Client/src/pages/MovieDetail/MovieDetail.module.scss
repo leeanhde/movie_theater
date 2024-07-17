@@ -62,22 +62,57 @@
     margin-top: 20px;
 }
 
-.commentList {
-    margin-top: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.selectedComment {
+.comment {
     margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
 
-    .reviewImage {
-        max-width: 100px;
-        height: auto;
-        border-radius: 10px;
+    .reviewsTitle {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .commentList {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .commentItem {
+        background-color: #ffffff; /* Slightly different background for each comment */
+        padding: 10px;
+        border-radius: 8px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        img {
+            max-width: 50px;
+            height: auto;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .commentContent {
+            flex: 1;
+        }
+
+        .commentRating,
+        .commentUser {
+            font-size: 14px;
+            color: #9e9e9e;
+        }
+
+        .starIcon {
+            fill: #ffc107;
+            width: 24px;
+            height: 24px;
+            margin-right: 5px;
+        }
+    }
+
+    .commentSeparator {
+        border: none;
+        border-bottom: 1px solid #3a3a3c;
+        margin: 10px 0;
     }
 }
+

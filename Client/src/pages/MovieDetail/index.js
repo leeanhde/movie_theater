@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 import * as movieService from '~/services/movieService'; 
 import * as feedbackService from '~/services/feedbackService'; 
 import moment from 'moment';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +43,8 @@ const MovieDetail = () => {
         const fetchFeedbackByMovie = async () => {
             if (movie) {
                 try {
-                    const feedbacks = await feedbackService.getFeedback(movie._id); 
+                    const feedbacks = await feedbackService.getFeedbackfu(movie._id); 
+                    console.log('test1',feedbacks);
                     setFeedbackByMovie(feedbacks);
                     setError(null);
                 } catch (error) {
@@ -57,7 +59,7 @@ const MovieDetail = () => {
         };
 
         fetchFeedbackByMovie();
-    }, [movie]);
+    }, []);
 
     if (isLoading) {
         return <div>Loading movie details...</div>;
@@ -92,21 +94,24 @@ const MovieDetail = () => {
                 <p className={cx('movieDuration')}>Thời gian: {movieDetail.duration}</p>
                 <p className={cx('movieActor')}>Diễn viên: {movieDetail.actor}</p>
                 <p className={cx('movieDate')}>Ngày chiếu: {formattedDate}</p>
+                <Button>Đặt vé</Button>
             </div>
             </div>
-            <div className={cx('comment')}>
+            {/* <div className={cx('comment')}>
                 <h3 className={cx('reviewsTitle')}>Bình luận từ người xem</h3>
                 <div className={cx('commentList')}>
                     {feedbackByMovie && feedbackByMovie.feedbacks && feedbackByMovie.feedbacks.map(feedback => (
                         <div key={feedback._id} className={cx('commentItem')}>
-                            <p className={cx('commentRating')}>Đánh giá: {feedback.rating}</p>
-                            <p className={cx('commentContent')}>Nội dung: {feedback.content}</p>
-                            <p className={cx('commentUser')}>Người dùng: {feedback.user.fullName}</p>
+                            <p className={cx('commentRating')}>Đánh giá: {feedback.rating} <svg className={cx('starIcon')} viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                    </svg></p>
+                            <p className={cx('commentContent')}>{feedback.content}</p>
+                            <p className={cx('commentUser')}>Người dùng: {feedback.user.username}</p>
                             <hr className={cx('commentSeparator')} />
                         </div>
                     ))}
                 </div>
-            </div>
+            </div> */}
         </div>
     );
 };
