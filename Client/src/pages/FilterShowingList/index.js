@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames/bind';
 import styles from './FilterShowingList.module.scss';
 import FilterBar from './FilterBar/index';
+import Search from '~/layouts/components/Search'
 import { useNavigate } from 'react-router-dom';
 import * as movieService from '~/services/movieService';
 const FilterShowingList = () => {
@@ -84,7 +85,9 @@ const FilterShowingList = () => {
 
     return (
         <div className={cx('movieShowingSection')}>
-            <h2 className={cx('movieShowingTitle')}>Phim đang chiếu</h2>
+            <h2 className={cx('movieShowingTitle')}>Movie List</h2>
+            
+            <Search />
             <FilterBar
                 genre={genre}
                 setGenre={setGenre}
@@ -95,6 +98,7 @@ const FilterShowingList = () => {
                 search={search}
                 setSearch={setSearch}
             />
+            
             {movies.length > 0 ? (
                 <div className={cx('movieList')}>
                     {movies.map((movie) => (

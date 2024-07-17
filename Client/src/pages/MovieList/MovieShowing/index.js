@@ -67,7 +67,7 @@ const MovieShowingList = () => {
 
     return (
         <div className={cx('movieShowingSection')}>
-            <h2 className={cx('movieShowingTitle')}>Showing</h2>
+            <h2 className={cx('movieShowingTitle')}>Movie Showing</h2>
             {movies.length > 0 ? (
                 <>
                     <button className={cx('arrowButton', 'left')} onClick={scrollLeft}>

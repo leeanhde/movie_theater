@@ -222,6 +222,40 @@ module.exports = {
     getMovieByName
 };
 
+async function searchMovies(req, res, next) {
+    console.log(req);
+    try {
+        const { q, type } = req.query;
+        if (!q) {
+            return res.status(400).json({ status: 400, message: "Missing required query parameter: q" });
+        }
+
+        const query = { movieNameEnglish: { $regex: '^' + q, $options: 'i' } };
+        const movies = await Movie.find(query).populate("promotionId types");
+
+        const resultList = movies.map(m => ({
+            _id: m._id,
+            movieNameEnglish: m.movieNameEnglish,
+            movieNameVn: m.movieNameVn,
+            director: m.director,
+            actor: m.actor,
+            duration: m.duration,
+            fromDate: new Date(m.fromDate).toDateString('en-GB'),
+            toDate: new Date(m.toDate).toDateString('en-GB'),
+            content: m.content,
+            largeImage: m.largeImage,
+            smallImage: m.smallImage,
+            movieProductionCompany: m.movieProductionCompany,
+            promotionId: m.promotionId?.map(p => p.title),
+            types: m.types?.map(t => t.typeName),
+            deleted: m.deleted
+        }));
+
+        res.status(200).json(resultList);
+    } catch (error) {
+        next(error);
+    }
+}
 
 const MovieController = {
     createMovie,
@@ -232,7 +266,8 @@ const MovieController = {
     nowShowingMovies,
     comingSoonMovies,
     getMovieDetail,
-    getMovieByName
+    getMovieByName,
+    searchMovies
 }
 
 module.exports = MovieController;

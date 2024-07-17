@@ -24,6 +24,7 @@ import Image from '~/components/Image';
 import Search from '../Search';
 
 const cx = classNames.bind(styles);
+const Icon = ({ icon }) => <FontAwesomeIcon icon={icon} />;
 
 const MENU_ITEMS = [
     {
@@ -50,10 +51,10 @@ const MENU_ITEMS = [
         title: 'Feedback and help',
         to: '/feedback',
     },
-    {
-        icon: <FontAwesomeIcon icon={faKeyboard} />,
-        title: 'Keyboard shortcuts',
-    },
+    // {
+    //     icon: <FontAwesomeIcon icon={faKeyboard} />,
+    //     title: 'Keyboard shortcuts',
+    // },
 ];
 
 function Header() {
@@ -69,30 +70,36 @@ function Header() {
         }
     };
 
-    const userMenu = [
-        {
-            icon: <FontAwesomeIcon icon={faUser} />,
-            title: 'View profile',
-            to: '/@:nickname',
-        },
-        {
-            icon: <FontAwesomeIcon icon={faCoins} />,
-            title: 'Get coins',
-            to: '/coin',
-        },
-        {
-            icon: <FontAwesomeIcon icon={faGear} />,
-            title: 'Settings',
-            to: '/settings',
-        },
-        ...MENU_ITEMS,
-        {
-            icon: <FontAwesomeIcon icon={faSignOut} />,
-            title: 'Log out',
-            to: '/logout',
-            separate: true,
-        },
-    ];
+
+    const user = JSON.parse(localStorage.getItem('user'));
+
+const userId = user.id;
+console.log('User ID:', userId);
+
+const userMenu = [
+    {
+        icon: <Icon icon={faUser} />,
+        title: 'View profile',
+        to: `/profile/${userId}`,
+    },
+    // {
+    //     icon: <Icon icon={faCoins} />,
+    //     title: 'Get coins',
+    //     to: '/coin',
+    // },
+    // {
+    //     icon: <Icon icon={faGear} />,
+    //     title: 'Settings',
+    //     to: '/settings',
+    // },
+    ...MENU_ITEMS,
+    {
+        icon: <Icon icon={faSignOut} />,
+        title: 'Log out',
+        to: '/logout',
+        separate: true,
+    },
+];
 
     return (
         <header className={cx('wrapper')}>

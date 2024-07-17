@@ -22,7 +22,7 @@ function Feedback() {
     };
     return (
         <div className={cx('app')}>
-            <h1>Feedback</h1>
+            <h2 className={cx('movieShowingTitle')}>Feedback</h2>
             <div className={cx('video-panel')}>
                 {feedbacks && feedbacks?.length !== 0 && feedbacks.slice(0, 3).map((feedback) => (
                     <div key={feedback._id} className={cx('video-card')} onClick={() => handleFeedbackClick(feedback)}>

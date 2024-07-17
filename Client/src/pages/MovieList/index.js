@@ -8,7 +8,6 @@ function MovieList() {
     const cx = classNames.bind(styles);
     return (
         <div className={cx('movie-list')}>
-            <h1>Movie List</h1>
 
             <div className={cx('movies-section')}>
                 <MovieShowingList />

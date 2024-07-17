@@ -22,17 +22,14 @@ function Home() {
                 </div>
             </div>
             <div className={cx('movieShowingSection')}>
-                <h2 className={cx('movieShowingTitle')}>Movie is showing</h2>
                 <MovieShowingList />
             </div>
 
             <div className={cx('movieReviewSection')}>
-                <h2 className={cx('movieReviewTitle')}>Movie review</h2>
                 <Feedback />
             </div>
 
             <div className={cx('movies-section')}>
-                <h2 className={cx('movieShowingTitle')}>Movie coming soon</h2>
                 <MovieComingSoon />
             </div>
         </div>

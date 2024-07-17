@@ -31,9 +31,9 @@ function Search() {
 
         const fetchApi = async () => {
             setLoading(true);
-
+console.log(debouncedValue);
             const result = await searchServices.search(debouncedValue);
-
+            console.log(result);
             setSearchResult(result);
             setLoading(false);
         };
@@ -57,19 +57,20 @@ function Search() {
             setSearchValue(searchValue);
         }
     };
-
+    console.log('result mv',searchResult);
+    console.log('result mv 2',showResult);
     return (
         // Using a wrapper <div> tag around the reference element solves
         // this by creating a new parentNode context.
         <div>
             <HeadlessTippy
                 interactive
-                visible={showResult && searchResult.length > 0}
+                visible={showResult && searchResult?.length > 0}
                 render={(attrs) => (
                     <div className={cx('search-result')} tabIndex="-1" {...attrs}>
                         <PopperWrapper>
-                            <h4 className={cx('search-title')}>Accounts</h4>
-                            {searchResult.map((result) => (
+                            <h4 className={cx('search-title')}>Movies</h4>
+                            {searchResult?.map((result) => (
                                 <AccountItem key={result.id} data={result} />
                             ))}
                         </PopperWrapper>
@@ -81,7 +82,7 @@ function Search() {
                     <input
                         ref={inputRef}
                         value={searchValue}
-                        placeholder="Search movies"
+                        placeholder="Search By Movie Name"
                         spellCheck={false}
                         onChange={handleChange}
                         onFocus={() => setShowResult(true)}

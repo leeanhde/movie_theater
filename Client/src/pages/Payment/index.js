@@ -50,7 +50,7 @@ const Payment = () => {
                     <p>
                         Rạp: <span>Beta Quang Trung</span>
                     </p>
-                    <p>Số 645 Quang Trung, Phường 11, Quận Gò Vấp, Thành phố Hồ Chí Minh</p>
+                    <p>Địa chỉ: <span>Số 645 Quang Trung, Phường 11, Quận Gò Vấp, Thành phố Hồ Chí Minh</span></p>
                     <p>
                         Phòng chiếu: <span>P5</span>
                     </p>
@@ -63,9 +63,6 @@ const Payment = () => {
                 </div>
             </div>
             <div className={cx('qr-code')}>
-                <h3>Quét mã QR bằng MoMo để thanh toán</h3>
-                <div className={cx('qr-image')}>{/* Ảnh QR code */}</div>
-                <p>Sử dụng App MoMo hoặc ứng dụng Camera hỗ trợ QR code để quét mã.</p>
                 <button
                     style={{
                         fontSize: '20px',
