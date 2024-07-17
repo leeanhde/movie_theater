@@ -9,13 +9,14 @@ const cx = classNames.bind(styles);
 function BookingFood() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { selectedSeats, movieTitle, time, selectedDay, showDate, currentDate: formattedDate, totalPrice: seatPrice } = location.state || {};
+    const { movie,selectedSeats, movieTitle, time, selectedDay, showDate, currentDate: formattedDate, totalPrice: seatPrice } = location.state || {};
     const [selectedFoods, setSelectedFoods] = useState([]);
 
     const handleContinue = () => {
         const totalFoodPrice = calculateTotalPrice(selectedFoods);
         const seatPriceNumber = Number(seatPrice.replace(/[^0-9]/g, '')); // Chuyển đổi seatPrice thành số
         const totalPrice = seatPriceNumber + totalFoodPrice;
+        console.log("🚀 ~ handleContinue ~ totalPrice:", totalPrice)
 
         navigate('/showtime/bookingseat/payment', {
             state: {
@@ -27,12 +28,14 @@ function BookingFood() {
                 showDate,
                 currentDate: formattedDate,
                 totalPrice,
+                movie
             },
         });
     };
 
     const handleFoodSelect = (food) => {
         setSelectedFoods((prevFoods) => {
+            console.log("🚀 ~ setSelectedFoods ~ prevFoods:", prevFoods)
             const existingFood = prevFoods.find(f => f._id === food._id);
             if (existingFood) {
                 return prevFoods.map(f => f._id === food._id ? { ...f, quantity: f.quantity + 1 } : f);

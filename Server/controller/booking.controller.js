@@ -6,34 +6,55 @@ const Booking = db.booking;
 
 async function bookTicket(req, res, next) {
     try {
-        const { userId, scheduleId, seats, snacks, totalAmount, paymentMethod } = req.body;
+        const { userId , movieId, seats,date, foodId, totalAmount } = req.body;
         const user = await User.findById(userId);
 
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }
 
-        const schedule = await Schedule.findById(scheduleId);
+        // const schedule = await Schedule.findById(scheduleId);
+        // if (!schedule) {
+        //     return res.status(404).json({ message: "Schedule not found" });
+        // }
 
-        if (!schedule) {
-            return res.status(404).json({ message: "Schedule not found" });
-        }
-
-        const newBooking = {
-            _id: new mongoose.Types.ObjectId(),
-            scheduleId,
+        const newBooking = new Booking({
+            date: date,
+            userId,
+            movieId,
             seats,
-            snacks,
+            foodId,
             totalAmount,
-            paymentMethod,
-            createdAt: new Date(),
-            updatedAt: new Date()
-        };
+            paymentMethod: "VNpay",
+            isPaid: false
+        });
 
-        user.bookings.push(newBooking);
+        await newBooking.save();
+
+        user.bookings.push(newBooking._id);
         await user.save();
 
         res.status(201).json(newBooking);
+    } catch (error) {
+        next(error);
+    }
+}
+async function updateBooking(bookingId, updateData) {
+    try {
+
+
+        const booking = await Booking.findById(bookingId);
+
+        if (!booking) {
+            return{ message: "Booking not found" }
+        }
+
+        Object.keys(updateData).forEach(key => {
+            booking[key] = updateData[key];
+        });
+
+        await booking.save();
+        return booking
     } catch (error) {
         next(error);
     }
@@ -60,5 +81,6 @@ async function getBookingHistory(req, res, next) {
 
 module.exports = {
     bookTicket,
-    getBookingHistory
+    getBookingHistory,
+    updateBooking
 };

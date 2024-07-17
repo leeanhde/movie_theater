@@ -11,7 +11,8 @@ function BookingSeat() {
     const navigate = useNavigate();
 
     /// no lay tu cai state dc truyen voa
-    const { movieTitle, time, selectedDay, showDate, currentDate: formattedDate, cinemaroomId } = location.state || {};
+    const {movie, movieTitle, time, selectedDay, showDate, currentDate: formattedDate, cinemaroomId } = location.state || {};
+    console.log("🚀 ~ BookingSeat ~ movieTitle:", movie)
     const [selectedSeats, setSelectedSeats] = useState([]);
     const [selectedSeatsDetail, setSelectedSeatsDetail] = useState([]);
 
@@ -26,6 +27,7 @@ function BookingSeat() {
                 showDate,
                 currentDate: formattedDate,
                 totalPrice,
+                movie
             },
         });
     };
@@ -79,9 +81,9 @@ function BookingSeat() {
                     <SeatGrid
                         selectedSeats={selectedSeats}
                         onSeatSelect={(seat) =>
-                            setSelectedSeats((prevSeats) =>
-                                prevSeats.includes(seat) ? prevSeats.filter((s) => s !== seat) : [...prevSeats, seat]
-                            )
+                            setSelectedSeats((prevSeats) => {
+                                return prevSeats.includes(seat) ? prevSeats.filter((s) => s !== seat) : [...prevSeats, seat]
+                            })
                         }
                         onSeatSelectDetail={(seat, details) =>
                             setSelectedSeatsDetail((prevSeats) =>

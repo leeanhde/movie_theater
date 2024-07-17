@@ -10,31 +10,41 @@ const Payment = () => {
     const location = useLocation();
     const {
         selectedSeats,
+        selectedFoods,
         movieTitle,
         time,
         selectedDay,
         showDate,
         currentDate: formattedDate,
         totalPrice,
+        movie,
     } = location.state || {};
+    console.log('🚀 ~ Payment ~ location.state :', location.state);
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        const data = {
-            amount: parseInt(totalPrice),
-        };
-
         try {
+            const user = JSON.parse(localStorage.getItem('user')) || {};
+            console.log('🚀 ~ handleSubmit ~ user:', user);
+            const bookingData = await axios.post('http://localhost:9999/api/booking/bookticket', {
+                date: time,
+                userId: user?.id,
+                movieId: movie._id,
+                seats: selectedSeats,
+                foodId: selectedFoods,
+                totalAmount: totalPrice,
+            });
+            const data = {
+                amount: parseInt(totalPrice),
+                orderId : bookingData.data._id
+            };
+
             const response = await axios.post('http://localhost:9999/api/vnpay/create_payment_url', data);
-            console.log(response.data.vnpUrl);
             const { vnpUrl } = response.data;
 
             if (vnpUrl) {
-                window.open(vnpUrl, '_blank');
+                window.open(vnpUrl);
             }
-        } catch (error) {
-            console.error('Error creating payment URL:', error);
-        }
+        } catch (error) {}
     };
     return (
         <div className={cx('payment-page')}>

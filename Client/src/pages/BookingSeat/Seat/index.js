@@ -6,6 +6,7 @@ const cx = classNames.bind(styles);
 
 const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
     const [bookedSeats, setBookedSeats] = useState([]);
+    console.log("🚀 ~ SeatGrid ~ bookedSeats:", bookedSeats)
 
     useEffect(() => {
         // Fetch booked seats based on cinemaroomId
@@ -24,7 +25,6 @@ const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
             fetchBookedSeats();
         }
     }, [cinemaroomId]);
-    console.log(bookedSeats)
     // Get unique seat rows and columns
     const rows = [...new Set(bookedSeats.map(seat => seat.seatRow))];
     const columns = [...new Set(bookedSeats.map(seat => seat.seatColumn))];
@@ -40,7 +40,7 @@ const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
                 ? bookedSeat.seatType === 2
                     ? 'vip'
                     : 'normal'
-                : 'normal'; // Default to normal if seatType is not defined
+                : 'normal';
 
             return {
                 seatNumber,
@@ -50,6 +50,7 @@ const SeatGrid = ({ selectedSeats, onSeatSelect, cinemaroomId }) => {
             };
         })
     );
+    console.log("🚀 ~ SeatGrid ~ seats:", seats)
 
     const handleSeatClick = (seatNumber) => {
         const seatRow = seatNumber.charAt(0);
