@@ -101,11 +101,14 @@ function ManageMovie() {
 
     const handleFormSubmit = async (event) => {
         event.preventDefault();
+        console.log("🚀 ~ handleFormSubmit ~ newMovie:", newMovie)
+
+
+
         const newMovieData = {
             ...newMovie,
             duration: parseInt(newMovie.duration),
         };
-
         try {
             await axios.post('http://localhost:9999/api/movies/create', newMovieData);
             togglePopup();
@@ -231,22 +234,15 @@ function ManageMovie() {
                                 <label>Movie Production Company:</label>
                                 <input type="text" name="movieProductionCompany" value={newMovie.movieProductionCompany} onChange={handleInputChange} required />
                             </div>
-                            {/* <div>
-                                <label>Promotion:</label>
-                                <select name="promotionId" multiple value={newMovie.promotionId} onChange={handleSelectChange} required>
-                                    {promotions.map(promotion => (
-                                        <option key={promotion._id} value={promotion._id}>{promotion.title}</option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
+                            
+                             <div>
                                 <label>Types:</label>
                                 <select name="types" multiple value={newMovie.types} onChange={handleSelectChange} required>
                                     {types.map(type => (
-                                        <option key={type._id} value={type._id}>{type.typeName}</option>
+                                        <option key={type._id} value={type._id}>{type.name}</option>
                                     ))}
                                 </select>
-                            </div> */}
+                            </div>
                             <button type="submit" style={{    float: 'left',
     marginTop: '20px',
     background: 'radial-gradient(transparent, black)',
