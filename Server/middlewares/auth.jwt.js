@@ -9,6 +9,7 @@ const { user: User, role: Role } = db;
 async function verifyToken(req, res, next) {
   try {
     const token = req.headers["x-access-token"];
+    console.log("🚀 ~ verifyToken ~ token:", token)
     if (!token) return next(createHttpError.Unauthorized("Token not provided"));
 
     // Verify token

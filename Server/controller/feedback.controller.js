@@ -17,11 +17,17 @@ const createFeedback = async (req, res, next) => {
       return res.status(404).json({ message: "Movie not found", data: null });
     }
 
-    const user = await User.findById(userId).populate("feedbacks");
+    const user = await User.findById(userId).populate("feedbacks bookings");
     if (!user) {
       return res.status(404).json({ message: "User not found", data: null });
     }
 
+    const hasBooked = user.bookings.some(
+      (booking) => booking.movieId.toString() === movieId
+  );
+  if (!hasBooked) {
+      return res.status(400).json({ message: "You need to book this movie before providing feedback", data: null });
+  }
     const existingFeedback = user.feedbacks.find(
       (feedback) => feedback.movieId.toString() === movieId
     );
