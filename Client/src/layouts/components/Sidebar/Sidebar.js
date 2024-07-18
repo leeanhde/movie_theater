@@ -197,7 +197,7 @@ function Sidebar({ role }) {
     return (
         <aside className={cx('wrapper')}>
             <Menu>{renderMenuItems()}</Menu>
-            {renderSuggestedAccounts()}
+            {/* {renderSuggestedAccounts()} */}
         </aside>
     );
 }

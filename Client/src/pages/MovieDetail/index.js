@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './MovieDetail.module.scss';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import * as movieService from '~/services/movieService'; 
 import * as feedbackService from '~/services/feedbackService'; 
 import moment from 'moment';
-import Button from '~/components/Button';
 
 const cx = classNames.bind(styles);
 
@@ -94,24 +93,35 @@ const MovieDetail = () => {
                 <p className={cx('movieDuration')}>Thời gian: {movieDetail.duration}</p>
                 <p className={cx('movieActor')}>Diễn viên: {movieDetail.actor}</p>
                 <p className={cx('movieDate')}>Ngày chiếu: {formattedDate}</p>
-                <Button>Đặt vé</Button>
+                <p className={cx('link-showtime')}>
+                <Link to="/showtime">Đặt vé</Link>
+                </p>
             </div>
             </div>
-            {/* <div className={cx('comment')}>
+            <div className={cx('comment')}>
                 <h3 className={cx('reviewsTitle')}>Bình luận từ người xem</h3>
                 <div className={cx('commentList')}>
-                    {feedbackByMovie && feedbackByMovie.feedbacks && feedbackByMovie.feedbacks.map(feedback => (
+                {feedbackByMovie && feedbackByMovie.feedbacks && feedbackByMovie.feedbacks.length > 0 ? (
+                <div className={cx('commentList')}>
+                    {feedbackByMovie.feedbacks.map((feedback) => (
                         <div key={feedback._id} className={cx('commentItem')}>
-                            <p className={cx('commentRating')}>Đánh giá: {feedback.rating} <svg className={cx('starIcon')} viewBox="0 0 24 24">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                    </svg></p>
+                            <p className={cx('commentRating')}>
+                                Đánh giá: {feedback.rating}{' '}
+                                <svg className={cx('starIcon')} viewBox="0 0 24 24">
+                                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                                </svg>
+                            </p>
                             <p className={cx('commentContent')}>{feedback.content}</p>
-                            <p className={cx('commentUser')}>Người dùng: {feedback.user.username}</p>
+                            <p className={cx('commentUser')}>Người dùng: {feedback.user?.username}</p>
                             <hr className={cx('commentSeparator')} />
                         </div>
                     ))}
                 </div>
-            </div> */}
+            ) : (
+                <p>Chưa có bình luận nào.</p>
+            )}
+                </div>
+            </div>
         </div>
     );
 };

@@ -1,25 +1,48 @@
 // UserProfileWrapper.js
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import UserProfileWrapper from '~/pages/Profile/UserProfileWrapper/index';
+import * as userService from '~/services/user.service'; 
+
 
 const Profile = () => {
-    const { nickname } = useParams();
+    const { userId } = useParams();
+    const [user, setUser] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Simulated user data
-    const user = {
-        profileImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9UdkG68P9AHESMfKJ-2Ybi9pfnqX1tqx3wQ&s',
-        name: nickname,
-        email: `${nickname}@example.com`,
-        joinDate: 'January 1, 2020',
-        favoriteGenre: 'Action',
-        totalReviews: 25,
-        favoriteMovies: [
-            { poster: 'https://via.placeholder.com/50x75', title: 'Movie 1' },
-            { poster: 'https://via.placeholder.com/50x75', title: 'Movie 2' },
-            { poster: 'https://via.placeholder.com/50x75', title: 'Movie 3' },
-        ],
-    };
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            if (userId) {
+                try {
+                    const userProfile = await userService.getUserProfile(userId); 
+                    setUser(userProfile);
+                    setError(null);
+                } catch (error) {
+                    console.error('Error fetching user profile:', error);
+                    setError('Failed to load user profile. Please try again later.');
+                } finally {
+                    setIsLoading(false);
+                }
+            } else {
+                setIsLoading(false);
+            }
+        };
+
+        fetchUserProfile();
+    }, [userId]);
+    if (isLoading) {
+        return <div>Loading user details...</div>;
+    }
+
+    if (error) {
+        return <div>{error}</div>;
+    }
+
+    if (!user) {
+        return <div>No user details available.</div>;
+    }
+    
 
     return <UserProfileWrapper user={user} />;
 };

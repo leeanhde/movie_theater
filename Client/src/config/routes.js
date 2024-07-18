@@ -7,7 +7,7 @@ const routes = {
     //user router
     home: '/home',
     feedback: '/feedback',
-    profile: '/@:nickname',
+    profile: '/profile/:userId',
     upload: '/upload',
     search: '/search',
     showtime: '/showtime',

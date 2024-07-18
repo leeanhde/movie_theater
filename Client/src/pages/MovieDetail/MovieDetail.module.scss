@@ -116,3 +116,21 @@
     }
 }
 
+.link-showtime {
+    margin-top: 20px;
+}
+
+.link-showtime a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff; /* Màu nền xanh */
+    color: #ffffff; /* Màu chữ trắng */
+    text-decoration: none; /* Loại bỏ gạch chân */
+    border-radius: 5px; /* Bo tròn góc */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+
+    &:hover {
+        background-color: #0056b3; /* Màu nền xanh nhạt khi hover */
+    }
+}
+
