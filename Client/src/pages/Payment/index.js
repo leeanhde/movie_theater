@@ -42,7 +42,7 @@ const Payment = () => {
             const { vnpUrl } = response.data;
 
             if (vnpUrl) {
-                window.open(vnpUrl);
+                window.location.href = vnpUrl;
             }
         } catch (error) {}
     };

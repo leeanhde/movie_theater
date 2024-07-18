@@ -36,6 +36,7 @@ function ManageMovie() {
                 name: movie.movieNameEnglish,
                 genre: movie.types.join(', '),
                 duration: `${movie.duration} mins`,
+                image : movie.largeImage,
                 status: new Date(movie.fromDate) > new Date() ? 'Coming Soon' : 'Now Showing',
             }));
             setMovies(fetchedMovies);
@@ -103,8 +104,6 @@ function ManageMovie() {
         const newMovieData = {
             ...newMovie,
             duration: parseInt(newMovie.duration),
-            promotionId: newMovie.promotionId,
-            types: newMovie.types
         };
 
         try {
@@ -133,17 +132,17 @@ function ManageMovie() {
                     <thead>
                     <tr>
                         <th className={cx('th')}>Movie Name</th>
-                        <th className={cx('th')}>Genre</th>
+                        <th className={cx('th')}>Image</th>
                         <th className={cx('th')}>Duration</th>
                         <th className={cx('th')}>Status</th>
-                        <th className={cx('th')}>Actions</th>
+                        {/* <th className={cx('th')}>Actions</th> */}
                     </tr>
                     </thead>
                     <tbody>
                     {filteredMovies.map((movie) => (
                         <tr key={movie.id}>
                             <td className={cx('td')}>{movie.name}</td>
-                            <td className={cx('td')}>{movie.genre}</td>
+                            <td className={cx('td')}><img src={movie.image} style={{height:'70px'}}/></td>
                             <td className={cx('td')}>{movie.duration}</td>
                             <td className={cx('td')}>
                                     <span
@@ -155,7 +154,7 @@ function ManageMovie() {
                                         {movie.status}
                                     </span>
                             </td>
-                            <td className={cx('td')}>
+                            {/* <td className={cx('td')}>
                                 <button
                                     className={cx('button', 'edit-button')}
                                     onClick={() => console.log(`Edit movie ${movie.id}`)}
@@ -168,14 +167,18 @@ function ManageMovie() {
                                 >
                                     Delete
                                 </button>
-                            </td>
+                            </td> */}
                         </tr>
                     ))}
                     </tbody>
                 </table>
             </div>
             <div className={cx('add-movie-button-container')}>
-                <button className={cx('button', 'add-movie-button')} onClick={togglePopup}>
+                <button className={cx('button', 'add-movie-button')} onClick={togglePopup} style={{  
+    marginTop: '20px',
+    background: 'radial-gradient(transparent, red)',
+    borderRadius: '20px',
+    padding: '15px 25px'}}>
                     Add Movie
                 </button>
             </div>
@@ -228,7 +231,7 @@ function ManageMovie() {
                                 <label>Movie Production Company:</label>
                                 <input type="text" name="movieProductionCompany" value={newMovie.movieProductionCompany} onChange={handleInputChange} required />
                             </div>
-                            <div>
+                            {/* <div>
                                 <label>Promotion:</label>
                                 <select name="promotionId" multiple value={newMovie.promotionId} onChange={handleSelectChange} required>
                                     {promotions.map(promotion => (
@@ -243,9 +246,17 @@ function ManageMovie() {
                                         <option key={type._id} value={type._id}>{type.typeName}</option>
                                     ))}
                                 </select>
-                            </div>
-                            <button type="submit">Submit</button>
-                            <button type="button" onClick={togglePopup}>Close</button>
+                            </div> */}
+                            <button type="submit" style={{    float: 'left',
+    marginTop: '20px',
+    background: 'radial-gradient(transparent, black)',
+    borderRadius: '20px',
+    padding: '15px 25px'}}>Submit</button>
+                            <button type="button" onClick={togglePopup} style={{    float: 'right',
+    marginTop: '20px',
+    background: 'radial-gradient(transparent, blue)',
+    borderRadius: '20px',
+    padding: '15px 25px'}}>Close</button>
                         </form>
                     </div>
                 </div>

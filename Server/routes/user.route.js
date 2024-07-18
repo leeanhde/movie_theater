@@ -7,6 +7,8 @@ userRouter.use(bodyParser.json());
 
 userRouter.get('/get/:userId',userController.getUserById);
 
+userRouter.get('/getAll',userController.getAllUser);
+
 userRouter.get('/by-booking/user/:userId',userController.getUserBookings);
 
 userRouter.get('/by-booking/getAll',userController.getUserAllBookings);

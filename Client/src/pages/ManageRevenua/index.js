@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ManageRevenua.module.scss';
 import TransactionList from './TransactionList';
 import RevenueChart from './RevenueChart';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -23,38 +24,47 @@ function ManageRevenue() {
     const [transactions, setTransactions] = useState(initialTransactions);
     const [filteredTransactions, setFilteredTransactions] = useState(initialTransactions);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const [revenue, setRevenue] = useState({});
     const handleSearch = (event) => {
-        const term = event.target.value.toLowerCase();
+        const term = event.target?.value?.toLowerCase();
         setSearchTerm(term);
         const filtered = transactions.filter(
             (transaction) =>
-                transaction.customerName.toLowerCase().includes(term) ||
-                transaction.transactionDate.includes(term) ||
-                transaction.paymentMethod.toLowerCase().includes(term),
+                transaction?.userId?.fullName.toLowerCase().includes(term)
         );
         setFilteredTransactions(filtered);
     };
-
+    useEffect(() => {
+        async function main() {
+            const listTrans = await axios.get('http://localhost:9999/api/revuene/listTransaction');
+            const revenue = await axios.get('http://localhost:9999/api/revuene/revenue');
+            console.log("🚀 ~ main ~ revenue:", revenue.data)
+            
+            setRevenue(revenue.data);
+            setTransactions(listTrans.data.paidBookings);
+            setFilteredTransactions(listTrans.data.paidBookings);
+        }
+        main()
+    }, []);
     return (
         <div className={cx('revenue-management')}>
             <h2 className={cx('header')}>Revenue Management</h2>
             <div className={cx('overview')}>
                 <div className={cx('overview-item')}>
                     <h3>Daily Revenue</h3>
-                    <p>$500,000</p>
+                    <p>${revenue.dailyRevenue?.toLocaleString()}</p>
                 </div>
                 <div className={cx('overview-item')}>
                     <h3>Weekly Revenue</h3>
-                    <p>$3,000,000</p>
+                    <p>${revenue.weeklyRevenue?.toLocaleString()}</p>
                 </div>
                 <div className={cx('overview-item')}>
                     <h3>Monthly Revenue</h3>
-                    <p>$12,000,000</p>
+                    <p>${revenue.monthlyRevenue?.toLocaleString()}</p>
                 </div>
                 <div className={cx('overview-item')}>
                     <h3>Yearly Revenue</h3>
-                    <p>$50,000,000</p>
+                    <p>${revenue.yearlyRevenue?.toLocaleString()}</p>
                 </div>
             </div>
             <RevenueChart transactions={transactions} />

@@ -8,7 +8,7 @@ const bookingSchema = new Schema({
     movieId: {type: mongoose.Schema.Types.ObjectId, ref: 'movie', required: true },
     seats: [{ type: String}],
     cinemaroom: {type: mongoose.Schema.Types.ObjectId, ref: 'cinemaRoom', },
-    foodId: [{type: mongoose.Schema.Types.ObjectId, ref: 'food' }],
+    foodId: [{type: mongoose.Schema.Types.ObjectId, ref: 'Food' }],
     totalAmount: { type: Number, required: true },
     paymentMethod: { type: String, required: true },
     isPaid: { type: Boolean, required: true},
