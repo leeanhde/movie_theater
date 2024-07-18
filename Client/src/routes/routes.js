@@ -45,7 +45,7 @@ import ManageStaff from '~/pages/ManageStaff';
 
 // Public routes
 const publicRoutes = [
-    { path: config.routes.landingpage, component: Landingpage, layout: HeaderOnly },
+    { path: config.routes.landingpage, component: Landingpage, layout: null },
     { path: config.routes.login, component: Login, layout: null },
     { path: config.routes.register, component: Register, layout: null },
 ];
