@@ -5,36 +5,6 @@ import axios from 'axios';
 
 function YourTicket() {
     const cx = classNames.bind(styles);
-    // Dummy data for booked tickets
-    const bookedTickets = [
-        {
-            id: 1,
-            movieTitle: 'Movie 1',
-            duration: '2 hours',
-            showDate: '2024-06-15',
-            genre: 'Action',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-            seats: 'A1, A2',
-            theater: 'Theater 1',
-            totalPrice: 200000,
-            bookedTime: '2024-06-14 10:00 AM',
-            theaterAddress: '123 Theater St, City, Country',
-        },
-        {
-            id: 2,
-            movieTitle: 'Movie 2',
-            duration: '1 hour 30 minutes',
-            showDate: '2024-06-16',
-            genre: 'Comedy',
-            description: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-            seats: 'B5, B6',
-            theater: 'Theater 2',
-            totalPrice: 150000,
-            bookedTime: '2024-06-14 11:00 AM',
-            theaterAddress: '456 Theater St, City, Country',
-        },
-        // Add more booked tickets as needed
-    ];
     const [bookedTicket,setBookedTicket] = useState([]);
     useEffect(()=>{
         const user = JSON.parse(localStorage.getItem('user')) || {};
@@ -47,7 +17,7 @@ function YourTicket() {
     },[])
     return (
         <div className={cx('booking-tickets')}>
-            <h1>Booked Tickets</h1>
+            <h2>Booked Tickets</h2>
             {bookedTicket.map((ticket) => (
                 <div key={ticket._id} className={cx('ticket')}>
                     <div className={cx('ticket-info')}>
