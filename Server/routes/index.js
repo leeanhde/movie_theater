@@ -11,7 +11,9 @@ const BookingRouter = require("./booking.route");
 const ScheduleRouter = require('./schedule.route')
 const foodRouter = require('./food.route')
 const vnpayRouter = require('./vnpay.route')
+const revuene = require('./revenue.route')
 
+router.use('/revuene', revuene);
 router.use('/movies', movieRouter);
 router.use('/types', TypeRouter);
 router.use('/promotions', PromotionRouter);

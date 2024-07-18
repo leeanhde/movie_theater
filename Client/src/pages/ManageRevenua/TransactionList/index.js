@@ -19,10 +19,10 @@ function TransactionList({ transactions }) {
             <tbody>
                 {transactions.map((transaction) => (
                     <tr key={transaction.id}>
-                        <td className={cx('td')}>{transaction.id}</td>
-                        <td className={cx('td')}>{transaction.customerName}</td>
-                        <td className={cx('td')}>${transaction.amount.toLocaleString()}</td>
-                        <td className={cx('td')}>{transaction.transactionDate}</td>
+                        <td className={cx('td')}>{transaction._id}</td>
+                        <td className={cx('td')}>{transaction?.userId?.fullName}</td>
+                        <td className={cx('td')}>${transaction?.totalAmount?.toLocaleString()}</td>
+                        <td className={cx('td')}>{new Date(transaction?.createdAt).toLocaleString('en-US', { timeZone: 'UTC' })}</td>
                         <td className={cx('td')}>{transaction.paymentMethod}</td>
                     </tr>
                 ))}

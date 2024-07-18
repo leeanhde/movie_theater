@@ -16,9 +16,6 @@ async function createMovie(req, res, next) {
             largeImage: req.body.largeImage,
             smallImage: req.body.smallImage,
             movieProductionCompany: req.body.movieProductionCompany,
-            promotionId: req.body.promotionId,
-            types: req.body.types,
-            cinemaRoomId: req.body.cinemaRoomId
         });
         const savedMovie = await newMovie.save();
         res.status(201).json(savedMovie);

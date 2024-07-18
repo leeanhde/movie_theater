@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './ManageUser.module.scss';
+import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
@@ -12,8 +13,8 @@ const initialUsers = [
 ];
 
 function ManageUser() {
-    const [users, setUsers] = useState(initialUsers);
-    const [filteredUsers, setFilteredUsers] = useState(initialUsers);
+    const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSearch = (event) => {
@@ -21,13 +22,20 @@ function ManageUser() {
         setSearchTerm(term);
         const filtered = users.filter(
             (user) =>
-                user.name.toLowerCase().includes(term) ||
+                user.username.toLowerCase().includes(term) ||
                 user.email.toLowerCase().includes(term) ||
-                user.role.toLowerCase().includes(term) ||
-                user.status.toLowerCase().includes(term),
+                user.deleted.toLowerCase().includes(term),
         );
         setFilteredUsers(filtered);
     };
+    useEffect(()=>{
+        async function main(){
+            const list = await axios.get('http://localhost:9999/api/user/getAll');
+            setUsers(list.data.user)    
+            setFilteredUsers(list.data.user)    
+        }
+        main();
+    },[]);
 
     const handleDeleteUser = (userId) => {
         const updatedUsers = users.filter((user) => user.id !== userId);
@@ -52,30 +60,28 @@ function ManageUser() {
                     <tr>
                         <th className={cx('th')}>Name</th>
                         <th className={cx('th')}>Email</th>
-                        <th className={cx('th')}>Role</th>
                         <th className={cx('th')}>Status</th>
                         <th className={cx('th')}>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {filteredUsers.map((user) => (
-                        <tr key={user.id}>
-                            <td className={cx('td')}>{user.name}</td>
-                            <td className={cx('td')}>{user.email}</td>
-                            <td className={cx('td')}>{user.role}</td>
+                    {filteredUsers?.map((user) => (
+                        <tr key={user._id}>
+                            <td className={cx('td')}>{user?.username}</td>
+                            <td className={cx('td')}>{user?.email}</td>
                             <td
-                                className={cx('td', {
-                                    'status-active': user.status === 'Active',
-                                    'status-inactive': user.status === 'Inactive',
-                                })}
+                                // className={cx('td', {
+                                //     'status-active': user.deleted === 'Active',
+                                //     'status-inactive': user.deleted === 'Inactive',
+                                // })}
                             >
-                                {user.status}
+                                {user?.deleted}
                             </td>
                             <td className={cx('td')}>
-                                <button className={cx('button')} onClick={() => console.log(`Edit user ${user.id}`)}>
+                                {/* <button className={cx('button')} onClick={() => console.log(`Edit user ${user.id}`)}>
                                     Edit
-                                </button>
-                                <button className={cx('button')} onClick={() => handleDeleteUser(user.id)}>
+                                </button> */}
+                                <button className={cx('button')} onClick={() => handleDeleteUser(user._id)}>
                                     Delete
                                 </button>
                             </td>
@@ -83,7 +89,7 @@ function ManageUser() {
                     ))}
                 </tbody>
             </table>
-            <div className={cx('add-user-form')}>
+            {/* <div className={cx('add-user-form')}>
                 <h3 className={cx('form-header')}>Add New User</h3>
                 <form className={cx('form')}>
                     <label className={cx('form-label')}>
@@ -113,7 +119,7 @@ function ManageUser() {
                         Add User
                     </button>
                 </form>
-            </div>
+            </div> */}
         </div>
     );
 }

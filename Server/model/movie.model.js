@@ -14,9 +14,9 @@ const movieSchema = new Schema({
     smallImage: String,
     movieProductionCompany: String,
     time: Array,
-    cinemaRoomId: [{type: mongoose.Schema.Types.ObjectId, ref:'cinemaroom', required: true}],
-    promotionId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'promotion', required: true }],
-    types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'type', required: true }],
+    cinemaRoomId: [{type: mongoose.Schema.Types.ObjectId, ref:'cinemaroom', required: false}],
+    promotionId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'promotion', required: false }],
+    types: [{ type: mongoose.Schema.Types.ObjectId, ref: 'type', required: false }],
     deleted: { type: Boolean, default: false }
 }, { timestamps: true });
 

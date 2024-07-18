@@ -16,6 +16,20 @@ const getUserById = async (req, res, next) => {
     next(error);
   }
 };
+const getAllUser = async (req, res, next) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.find({});
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found", data: null });
+    }
+
+    res.status(200).json({ user });
+  } catch (error) {
+    next(error);
+  }
+};
 const getUserByRole = async (req, res, next) => {
   try {
     const { roleName } = req.params;
@@ -220,6 +234,7 @@ const UserController = {
   editProfile, 
   list, 
   deleteUserById, 
+  getAllUser,
   getUserById,
   getUserByRole,
   getUserBookings,

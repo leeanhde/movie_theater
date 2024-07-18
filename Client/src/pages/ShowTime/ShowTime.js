@@ -3,7 +3,7 @@ import styles from './ShowTime.module.scss';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { getDayOfWeek } from '~/utils/date.helper';
+import { adjustTimeFromTimestamp, getDayOfWeek } from '~/utils/date.helper';
 
 function ShowTime() {
     const cx = classNames.bind(styles);
@@ -48,12 +48,12 @@ function ShowTime() {
     // State to track selected day
     const [selectedDay, setSelectedDay] = useState('Monday');
 
-    const handleTimeClick = (movie,selectDay) => {
+    const handleTimeClick = (movie,selectDay,startTime) => {
         const currentDate = new Date();
         const formattedDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
         navigate('/showtime/bookingseat', {
-            state: { movieTitle : movie.movieNameEnglish, time : movie.toDate, selectedDay:selectDay, showDate : selectDay, currentDate: formattedDate , cinemaroomId : "60d21b5967d0d8992e610c9b" },
+            state: {movie:movie, movieTitle : movie.movieNameEnglish, time : startTime, selectedDay:selectDay, showDate : selectDay, currentDate: formattedDate , cinemaroomId : "60d21b5967d0d8992e610c9b" },
         });
     };
 
@@ -97,9 +97,9 @@ function ShowTime() {
                                             <div className={cx('times')}>
                                                 <span
                                                     className={cx('time')}
-                                                    onClick={() => handleTimeClick(movie?.movieId,daySchedule.day)}
+                                                    onClick={() => handleTimeClick(movie?.movieId,daySchedule.day,`${adjustTimeFromTimestamp(movie?.scheduleTime)} - ${adjustTimeFromTimestamp(movie?.scheduleTime,movie?.movieId.duration)}`)}
                                                 >
-                                                    {movie?.movieId.duration}
+                                                    {`${adjustTimeFromTimestamp(movie?.scheduleTime)} - ${adjustTimeFromTimestamp(movie?.scheduleTime,movie?.movieId.duration)}`}
                                                 </span>
                                             </div>
                                         </div>
