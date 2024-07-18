@@ -14,6 +14,15 @@ export const getFeedback = async (id) => {
         throw error;
     }
 };
+export const create = async (data) => {
+    try {
+        const res = await httpRequest.post('feedbacks/create', data);
+        return res;
+    } catch (error) {
+        console.error('Error fetching movies now showing:', error.response || error);
+        throw error;
+    }
+};
 
 export const getAllFeedback = async () => {
     try {
@@ -32,7 +41,7 @@ export const getAllFeedback = async () => {
 export const getAllFeedbackByMovie = async () => {
     try {
         const res = await httpRequest.get('feedbacks/getAllByMovie');
-            return res;
+        return res;
     } catch (error) {
         console.error('Error fetching movies now showing:', error.response || error);
         throw error;
@@ -43,7 +52,7 @@ export const getFeedbackfu = async (id) => {
     try {
         const res = await httpRequest.get('feedbacks/get/movie/' + id);
 
-            return res;
+        return res;
     } catch (error) {
         console.error('Error fetching movies now showing:', error.response || error);
         throw error;

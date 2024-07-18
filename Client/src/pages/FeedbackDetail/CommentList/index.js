@@ -14,7 +14,7 @@ const Comment = ({ comment, isSelected, onCommentClick }) => {
                 </div>
                 {comment.rating !== null && <div className={cx('reviewRating')}>{comment.rating}/10</div>}
             </div>
-            <p className={cx('reviewContent')}>{comment.content}</p>
+            <p className={cx('reviewContent')}>{comment.comment}</p>
         </div>
     );
 };

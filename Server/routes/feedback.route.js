@@ -8,14 +8,6 @@ FeedbackRouter.use(bodyParser.json());
 
 FeedbackRouter.post("/create", JWT.verifyToken, FeedbackController.createFeedback);
 
-// FeedbackRouter.get("/getAll", JWT.verifyToken, JWT.isAdmin, FeedbackController.getAllFeedbacks);
-
-// FeedbackRouter.get("/get/:userId", JWT.verifyToken, JWT.isAdmin, FeedbackController.getUserFeedbacks);
-
-// FeedbackRouter.put("/:feedbackId", JWT.verifyToken, JWT.isAdmin, FeedbackController.updateFeedback);
-
-// FeedbackRouter.delete("/:feedbackId", JWT.verifyToken, JWT.isAdmin, FeedbackController.deleteFeedback);
-
 FeedbackRouter.get("/getAll", FeedbackController.getAllFeedbacks);
 
 FeedbackRouter.get("/getAllByMovie", FeedbackController.getAllMoviesWithFeedback);
