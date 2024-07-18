@@ -59,7 +59,6 @@ function ShowTime() {
 
     return (
         <div className={cx('showtimes')}>
-            <h1>Show Time</h1>
             <div className={cx('day-selector')}>
                 {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
                     <button

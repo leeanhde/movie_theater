@@ -185,8 +185,7 @@ const editProfile = async (req, res, next) => {
       gender: req.body.gender,
       phoneNumber: req.body.phoneNumber,
       address: req.body.address,
-      image: req.body.image,
-      deleted: req.body.deleted,
+      image: req.body.image
     };
     const updatedUser = await User.findByIdAndUpdate(userId, updatedData, {
       new: true,

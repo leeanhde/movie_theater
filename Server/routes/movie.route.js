@@ -7,7 +7,7 @@ movieRouter.use(bodyParser.json());
 
 movieRouter.post('/create', MovieController.createMovie);
 movieRouter.get('/movielist', MovieController.listMovies);
-movieRouter.get('/nowshowing',JWT.verifyToken, MovieController.nowShowingMovies);
+movieRouter.get('/nowshowing', MovieController.nowShowingMovies);
 movieRouter.get('/comingsoon', MovieController.comingSoonMovies);
 movieRouter.put('/update/:id', MovieController.editMovie);
 movieRouter.delete('/delete/:id', MovieController.deleteMovie);

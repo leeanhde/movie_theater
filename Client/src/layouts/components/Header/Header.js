@@ -22,6 +22,7 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, UploadIcon } from '~/components/Icons';
 import Image from '~/components/Image';
 import Search from '../Search';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 const Icon = ({ icon }) => <FontAwesomeIcon icon={icon} />;
@@ -59,7 +60,7 @@ const MENU_ITEMS = [
 
 function Header() {
     const currentUser = true;
-
+    const navigate = useNavigate();
     // Handle logic
     const handleMenuChange = (menuItem) => {
         switch (menuItem.type) {
@@ -71,10 +72,16 @@ function Header() {
     };
 
 
-    const user = JSON.parse(localStorage.getItem('user'));
-
+const user = JSON.parse(localStorage.getItem('user'));
+console.log(user);
 const userId = user.id;
 console.log('User ID:', userId);
+
+const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('accessToken');
+    navigate('/login');
+};
 
 const userMenu = [
     {
@@ -96,7 +103,7 @@ const userMenu = [
     {
         icon: <Icon icon={faSignOut} />,
         title: 'Log out',
-        to: '/logout',
+        action: handleLogout,
         separate: true,
     },
 ];

@@ -41,7 +41,7 @@ async function bookTicket(req, res, next) {
 }
 async function updateBooking(bookingId, updateData) {
     try {
-        const booking = await Booking.findById(bookingId).populate("users");
+        const booking = await Booking.findById(bookingId).populate("userId");
 
         if (!booking) {
             return{ message: "Booking not found" }
@@ -54,7 +54,7 @@ async function updateBooking(bookingId, updateData) {
         await booking.save();
         return booking
     } catch (error) {
-        next(error);
+        console.log(error);
     }
 }
 

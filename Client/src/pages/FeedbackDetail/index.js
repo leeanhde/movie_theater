@@ -52,7 +52,7 @@ const FeedbackDetail = () => {
     };
     return (
         <div className={cx('container')}>
-            <h1 className={cx('title')}>{`Review phim ${feedback.movieNameVn} trên MoMo`}</h1>
+            <h1 className={cx('title')}>{`Review phim ${feedback.movieNameVn}`}</h1>
             <div className={cx('movieInfo')}>
                 <img src={feedback.largeImage} alt={feedback.movieNameVn} className={cx('poster')} />
                 <div className={cx('details')}>
@@ -60,9 +60,9 @@ const FeedbackDetail = () => {
                         <span className={cx('rating')}>{feedback.averageRating}</span>
                         <span className={cx('maxRating')}>/10 - {feedback.averageRating > 7 ? 'Cực phẩm' : 'Đáng xem'}</span>
                     </div>
-                    <p className={cx('genre')}>{feedback.toDate}</p>
-                    <p className={cx('releaseDate')}>Ngày chiếu: {feedback.toDate}</p>
-                    <button className={cx('bookButton')} onClick={() => navigate('/moviedetail')}>
+                    <p className={cx('genre')}>{feedback.director}</p>
+                    <p className={cx('releaseDate')}>Ngày chiếu: {new Date(feedback.fromDate || null)?.toISOString().split('T')[0] || ''}</p>
+                    <button className={cx('bookButton')} onClick={() => navigate('/showtime')}>
                         Đặt vé ngay
                     </button>
                 </div>

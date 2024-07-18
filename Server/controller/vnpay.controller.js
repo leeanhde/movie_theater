@@ -98,6 +98,7 @@ const paymentReturn = async (req, res) => {
 
   if (secureHash === signed) {
     const booked = await BookingController.updateBooking(vnp_Params.vnp_TxnRef, {isPaid : true})
+    console.log("🚀 ~ paymentReturn ~ booked:", booked)
     const email = booked.userId.email;
     console.log("🚀 ~ paymentReturn ~ email:", email)
    await orderSendEmailService(email,vnp_Params.vnp_TxnRef);

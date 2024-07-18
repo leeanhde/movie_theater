@@ -12,8 +12,8 @@ export const getUserProfile= async (id) => {
 
 export const updateProfile = async (id, data) => {
     try {
-        const res = await httpRequest.put('profile/update/' + id, data);
-        return res;
+        const res = await httpRequest.put('user/profile/update/' + id, data);
+        return res.data;
     } catch (error) {
         console.error('Error updating user profile:', error.response || error);
         throw error;
