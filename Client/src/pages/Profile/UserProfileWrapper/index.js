@@ -22,11 +22,12 @@ const UserProfileWrapper = ({ user }) => {
         });
     };
 
+    console.log(userInfo._id);
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await userService.updateProfile(userInfo.id, userInfo);
-            console.log(userInfo.id, userInfo);
+            await userService.updateProfile(userInfo._id, userInfo);
+            console.log(userInfo);
             alert('Profile updated successfully!');
             navigate('/home');
         } catch (error) {
@@ -76,7 +77,7 @@ const UserProfileWrapper = ({ user }) => {
                     <input
                         type="date"
                         name="dateOfBirth"
-                        value={userInfo.dob || ''}
+                        value={new Date(userInfo.dob || null)?.toISOString().split('T')[0] || ''}
                         onChange={handleChange}
                         className={cx('profileInput')}
                     />
@@ -145,10 +146,6 @@ const UserProfileWrapper = ({ user }) => {
                         onChange={handleChange}
                         className={cx('profileInput')}
                     />
-                </label>
-                <label className={cx('profileLabel')}>
-                    Image:
-                    <input type="file" name="image" className={cx('profileInput')} />
                 </label>
                 <div className={cx('profileButtons')}>
                     <button type="submit" className={cx('profileButton', 'saveButton')}>
