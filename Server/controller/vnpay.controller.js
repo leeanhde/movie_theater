@@ -5,6 +5,7 @@ const querystring = require('qs');
 // const vnp_Url = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
 // const vnp_ReturnUrl = 'http://localhost:3000/payment-return';
 const BookingController = require('../controller/booking.controller'); 
+const { orderSendEmailService } = require('../util/email.service');
 const createPaymentUrl = async (req, res) => {
     var ipAddr =
     req.headers["x-forwarded-for"] ||
@@ -24,7 +25,8 @@ const createPaymentUrl = async (req, res) => {
   var amount = req.body.amount;
   var bankCode = "VNBANK";
 
-  var orderInfo = "Order #id";
+  const randomId = Math.floor(Math.random() * 10000); 
+    const orderInfo = `Order #${randomId}`;
   var orderType = "billpayment";
   var locale = "vn";
   if (locale === null || locale === "") {
@@ -77,7 +79,7 @@ function sortObject(obj) {
     return sorted;
   }
 
-const paymentReturn = (req, res) => {
+const paymentReturn = async (req, res) => {
   let vnp_Params = req.query;
 
   let secureHash = vnp_Params["vnp_SecureHash"];
@@ -86,7 +88,6 @@ const paymentReturn = (req, res) => {
   delete vnp_Params["vnp_SecureHashType"];
 
   vnp_Params = sortObject(vnp_Params);
-  console.log("🚀 ~ paymentReturn ~ vnp_Params:", vnp_Params)
 
   let tmnCode = "7IP7E1UP";
   let secretKey = "ZDDRRVYIDEIUHLSNOWVVTGWBJCFOUZYJ";
@@ -96,7 +97,10 @@ const paymentReturn = (req, res) => {
   let signed = hmac.update(new Buffer(signData, "utf-8")).digest("hex");
 
   if (secureHash === signed) {
-    BookingController.updateBooking(vnp_Params.vnp_TxnRef, {isPaid : true})
+    const booked = await BookingController.updateBooking(vnp_Params.vnp_TxnRef, {isPaid : true})
+    const email = booked.userId.email;
+    console.log("🚀 ~ paymentReturn ~ email:", email)
+   await orderSendEmailService(email,vnp_Params.vnp_TxnRef);
     res.redirect("http://localhost:3000/yourticket");
   } else {
   }

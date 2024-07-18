@@ -36,7 +36,6 @@ const orderSendEmailService = async (email, orderId) => {
   // Generate QR code for the order ID
   const qrCodeUrl = await generateQRCode(orderId);
   const img_url = await uploadProductImageToCloudinary(qrCodeUrl);
-  console.log("🚀 ~ orderSendEmailService ~ qrCodeUrl:", img_url);
 
   const emailBody = `
       <p>Cảm ơn bạn đã lựa chọn dịch vụ của chúng tôi.</p>

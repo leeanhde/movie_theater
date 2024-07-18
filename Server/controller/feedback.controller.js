@@ -21,10 +21,12 @@ const createFeedback = async (req, res, next) => {
     if (!user) {
       return res.status(404).json({ message: "User not found", data: null });
     }
+    console.log("🚀 ~ createFeedback ~ user:", user.bookings)
 
     const hasBooked = user.bookings.some(
       (booking) => booking.movieId.toString() === movieId
   );
+    console.log("🚀 ~ createFeedback ~ hasBooked:", hasBooked)
   if (!hasBooked) {
       return res.status(400).json({ message: "You need to book this movie before providing feedback", data: null });
   }
